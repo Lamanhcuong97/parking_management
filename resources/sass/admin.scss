@@ -1,0 +1,10 @@
+@for $i from 20 through 200 {
+    .w-#{$i}{
+        min-width: #{$i}px;
+    }
+}
+
+.error{
+    color: red;
+    font-size: 12px;
+}
