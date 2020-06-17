@@ -19,14 +19,14 @@
     <!-- Container fluid  -->
     <div class="container-fluid">
         <!-- Start Page Content -->
-        <form class="form-valide" action="#" method="post">
+        <form class="form-valide" action="#" method="get">
             <div class="row">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Chọn thời gian thống kê</h4>
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label class="control-label">Chọn Công ty</label>
                                         <select class="form-control" id="statistic-company"
@@ -39,7 +39,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label class="control-label">Tên người dùng</label>
                                         <input type="text" class="form-control"
@@ -47,7 +47,7 @@
                                                 placeholder="Tên người dùng">
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label class="control-label">Tên bãi gửi</label>
                                         <input type="text" class="form-control"
@@ -55,23 +55,36 @@
                                                 placeholder="Nhập tên bãi">
                                     </div>
                                 </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="control-label">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</label>
+                                        <button type="submit" class="btn btn-warning btn-rounded m-b-10 m-l-5">
+                                            <i class="fa fa-search"></i> Tìm kiếm
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
 
 
                             <div class="row">
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label class="control-label">Địa chỉ Mac</label>
-                                        <input type="text" class="form-control"
-                                                id="statistic-login-device" name="statistic-login-device"
-                                                placeholder="Nhập địa chỉ Mac">
+                                <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label class="control-label">Trạng thái</label>
+                                            <select class="form-control"
+                                                    id="search-vehicle-status"
+                                                    name="search-vehicle-status">
+                                                <option value="">Chọn trạng thái</option>
+                                                <option value="1">Trong bãi</option>
+                                                <option value="2">Rời bãi</option>
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label class="control-label">Thời gian bắt đầu đầu</label>
                                         <input type="datetime-local" class="form-control"
-                                                id="statistic-login-time-start" name="statistic-login-time-start"
+                                                id="statistic-login-time-start" name="search_time_start"
+                                                value="{{ old('search_time_start')}}"
                                                 placeholder="ngày/tháng/năm giờ:phút:giây">
                                     </div>
                                 </div>
@@ -79,16 +92,20 @@
                                     <div class="form-group">
                                         <label class="control-label">Thời gian kết thúc</label>
                                         <input type="datetime-local" class="form-control"
-                                                id="statistic-login-time-end" name="statistic-login-time-end"
+                                                id="statistic-login-time-end" name="search_time_end"
+                                                value="{{ old('search_time_end')}}"
                                                 placeholder="ngày/tháng/năm giờ:phút:giây">
                                     </div>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <div class="form-group">
-                                        <label class="control-label">Thống kê</label><br>
-                                        <button type="submit" class="btn btn-warning btn-rounded m-b-10 m-l-5">
-                                            <i class="fa fa-search"></i> Tìm kiếm
-                                        </button>
+                                        <label class="control-label">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</label>
+                                        <a 
+                                            class="btn btn-default btn-refresh btn-rounded m-b-10 m-l-5"
+                                            href="{{ route('statisticLogin') }}"
+                                        >
+                                            <i class="fa fa-eraser"></i> Làm mới
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -119,55 +136,23 @@
                                     <th>Trạng thái</th>
                                 </tr>
                                 </thead>
-                                <tfoot>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Họ và tên</th>
-                                    <th>Thiết bị</th>
-                                    <th>Bãi</th>
-                                    <th>Thời gian đăng nhập</th>
-                                    <th>Thời gian đăng xuất</th>
-                                    <th>Trạng thái</th>
-                                </tr>
-                                </tfoot>
                                 <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Trần Nguyên Nghĩa</td>
-                                    <td>E8:50:8B:3E:AE:10</td>
-                                    <td>Bãi gửi số 1</td>
-                                    <td>2018-06-22 04:04:38</td>
-                                    <td>0000-00-00 00:00:00</td>
-                                    <td><span class="badge badge-success">Đang hoạt động</span></td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Phan Thanh Hùng</td>
-                                    <td>E8:50:8B:3E:AE:10</td>
-                                    <td>Bãi gửi số 1</td>
-                                    <td>2018-06-22 04:04:38</td>
-                                    <td>2018-06-22 06:04:38</td>
-                                    <td><span class="badge badge-warning">Đã đang xuất</span></td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Hà Văn Chương</td>
-                                    <td>E8:50:8B:3E:AE:10</td>
-                                    <td>Bãi gửi số 2</td>
-                                    <td>2018-06-22 04:04:38</td>
-                                    <td>0000-00-00 00:00:00</td>
-                                    <td><span class="badge badge-success">Đang hoạt động</span></td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>Lưu Thế Anh</td>
-                                    <td>E8:50:8B:3E:AE:10</td>
-                                    <td>Bãi gửi số 2</td>
-                                    <td>2018-06-22 04:04:38</td>
-                                    <td>2018-06-22 06:04:38</td>
-                                    <td><span class="badge badge-warning">Đã đang xuất</span></td>
-                                </tr>
-
+                                    @if(count($log_logins) != 0)
+                                        @php 
+                                        $i = 1;
+                                        @endphp
+                                        @foreach($log_logins as $log_login)
+                                            <tr>
+                                                <td>{{ $i++ }}</td>
+                                                <td>{{ $log_login->user->User_Name ?? '' }}</td>
+                                                <td>{{ $log_login->MAC_Addr ?? '' }}</td>
+                                                <td>{{ $log_login->parking->Parking_Area }}</td>
+                                                <td>{{ $log_login->Time_In }}</td>
+                                                <td>{{ $log_login->Time_Out }}</td>
+                                                <td><span class="badge badge-success">Đang hoạt động</span></td>
+                                            </tr>
+                                        @endforeach
+                                    @endif
                                 </tbody>
                             </table>
                         </div>
@@ -222,4 +207,17 @@
     </footer>
     <!-- End footer -->
 </div>
+@endsection
+
+@section('script')
+
+<script src={{ asset("/js/lib/datatables/datatables.min.js") }}></script>
+<script src={{ asset("/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js") }}></script>
+<script src={{ asset("/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js") }}></script>
+<script src={{ asset("/js/lib/datatables/cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js") }}></script>
+<script src={{ asset("/js/lib/datatables/cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js") }}></script>
+<script src={{ asset("/js/lib/datatables/cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js") }}></script>
+<script src={{ asset("/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js") }}></script>
+<script src={{ asset("/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js") }}></script>
+<script src={{ asset("/js/lib/datatables/datatables-init.js") }}></script>
 @endsection

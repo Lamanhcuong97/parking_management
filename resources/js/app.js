@@ -5,8 +5,17 @@
  */
 
 require('./bootstrap');
+require('./common');
+require('./jquery.slimscroll');
+require('./scripts');
+require('./sidebarmenu');
 
 window.Vue = require('vue');
+
+window.toastr = require('toastr')
+
+// CommonJS
+window.swal = require('sweetalert2');
 
 /**
  * The following block of code may be used to automatically register your

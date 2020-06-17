@@ -73,7 +73,7 @@
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-lg-8 ml-auto">
-                                        <button type="submit" class="btn btn-primary">Cập nhật</button>
+                                        <button type="submit" class="btn btn-primary btn-update" >Cập nhật</button>
                                     </div>
                                 </div>
 
@@ -132,3 +132,33 @@
     <!-- End footer -->
 </div>
 @endsection
+
+@section('script')
+<script>
+    $(document).ready(function(){
+        $('.btn-update').click(function (e) {
+            e.preventDefault();
+
+            var $form = $(this).closest('form');
+            
+            swal({
+                title: "Bạn có muốn?",
+                text: "Cập nhật dữ liệu không?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Có", 
+                cancelButtonText: "Không", 
+                closeOnConfirm: false
+            }, function (isConfirmed) {
+                if (isConfirmed) {
+                    $form.submit();
+                }
+            });
+
+            return false;
+        });
+    })
+</script>
+@endsection
+

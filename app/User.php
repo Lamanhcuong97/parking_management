@@ -23,4 +23,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\Company', 'Com_ID', 'Com_ID');
     }
+
+    public function log_logins()
+    {
+        return $this->hasMany('App\LogLogIn', 'User_ID', 'User_ID');
+    }
 }

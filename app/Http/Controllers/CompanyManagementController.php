@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Company;
 use Auth;
-Use \Carbon\Carbon;
+use \Carbon\Carbon;
+
 
 class CompanyManagementController extends Controller
 {
@@ -68,6 +69,7 @@ class CompanyManagementController extends Controller
     {
         $date = Carbon::now();
         $date = $date->toDateTimeString();
+        $user = Session::get('user');
 
         $company = new Company();
         $company->Com_Name = $request->company_name;
@@ -78,8 +80,10 @@ class CompanyManagementController extends Controller
         $company->Reg_Date = $date;
         $company->Mod_Date = $date;
         $company->Mod_UID = 0;
-        $company->Reg_UID = isset(Auth::user()->Com_ID) ? Auth::user()->Com_ID : 'USR00000000000000001' ;
+        $company->Reg_UID = $user->User_ID ;
         $company->save();
+
+        toastr()->success('Dữ liệu được lưu thành công!');
         
         return redirect()->route('company-management.index');
     }
@@ -120,6 +124,7 @@ class CompanyManagementController extends Controller
     {
         $date = Carbon::now();
         $date = $date->toDateTimeString();
+        $user = Session::get('user');
 
         $company = Company::where('Com_ID', $id);
 
@@ -129,7 +134,9 @@ class CompanyManagementController extends Controller
         $company->update(["Com_Email" =>  $request->company_email]);
         $company->update(["Delete_Flag" =>  $request->status]);
         $company->update(["Mod_Date" =>  $date]);
-        $company->update(["Mod_UID" =>  isset(Auth::user()->Com_ID) ? Auth::user()->Com_ID : 'USR00000000000000001']);
+        $company->update(["Mod_UID" =>  $user->User_ID]);
+
+        toastr()->success('Dữ liệu được lưu thành công!');
         
         return redirect()->route('company-management.index');
     }
@@ -142,6 +149,16 @@ class CompanyManagementController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $date = Carbon::now();
+        $date = $date->toDateTimeString();
+        $user = Session::get('user');
+
+        $company = Company::where('Com_ID', $id);
+
+        $company->update(["Delete_Flag" =>  $request->status]);
+        $company->update(["Mod_Date" =>  $date]);
+        $company->update(["Mod_UID" =>  $user->User_ID]);
+
+        toastr()->success('Dữ liệu được lưu thành công!');
     }
 }

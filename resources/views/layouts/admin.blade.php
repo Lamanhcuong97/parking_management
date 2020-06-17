@@ -22,11 +22,13 @@
     <link href={{ asset("/css/helper.css") }} rel="stylesheet">
     <link href={{ asset("/css/style.css") }} rel="stylesheet">
     <link href={{ asset("/css/admin.css") }} rel="stylesheet">
+    @toastr_css
+
 
     <link href={{ asset("css/lib/calendar2/pignose.calendar.min.css") }} rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset("css/lib/sweetalert/sweetalert.css") }}">
+    <script src="{{ asset("/js/lib/sweetalert/sweetalert.min.js") }}"></script>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:** -->
     <!--[if lt IE 9]>
@@ -41,6 +43,7 @@
     <svg class="circular" viewBox="25 25 50 50">
         <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" /> </svg>
 </div>
+@include('sweetalert::alert')
 <!-- Main wrapper  -->
 <div id="main-wrapper">
     <!-- header header  -->
@@ -50,10 +53,10 @@
             <div class="navbar-header">
                 <a class="navbar-brand" href="../index.html">
                     <!-- Logo icon -->
-                    <b><img src={{ asset("/images/logo.png") }} alt="homepage" class="dark-logo" /></b>
+                    <img src={{ asset("/images/logo.png") }} alt="homepage" class="dark-logo" />
                     <!--End Logo icon -->
                     <!-- Logo text -->
-                    <span><img src={{ asset("/images/logo-text.png") }} alt="homepage" class="dark-logo" /></span>
+                    <span class="logo-text">Admin</span>
                 </a>
             </div>
             <!-- End Logo -->
@@ -75,7 +78,7 @@
 
                     <!-- Profile -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-muted" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="../images/users/4.png" alt="user" class="profile-pic" /></a>
+                        <a class="nav-link dropdown-toggle text-muted" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="../images/users/avatar_profile.png" alt="user" class="profile-pic" /></a>
                         <div class="dropdown-menu dropdown-menu-right animated zoomIn">
                             <ul class="dropdown-user">
                                 <li><a href={{ asset("profile") }}><i class="ti-user"></i> Thông tin cá nhân</a></li>
@@ -115,12 +118,20 @@
 <script src={{ asset("/js/sidebarmenu.js") }}></script>
 <!--stickey kit -->
 <script src={{ asset("/js/lib/sticky-kit-master/dist/sticky-kit.min.js") }}></script>
-
-
+<!-- Scripts -->
+<script src="{{ asset('js/app.js') }}" defer></script>
+@toastr_js
+@toastr_render  
 <!-- Form validation -->
 
 <!--Custom JavaScript -->
-<script src="../js/scripts.js"></script>
+<script src={{ asset("/js/scripts.js") }}></script>
+<script src={{ asset("/js/common.js") }}></script>
+<script>
+    
+    var base_url = '{{ asset('') }}';
+</script>
+
 
 @yield('script')
 

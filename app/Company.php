@@ -8,6 +8,7 @@ class Company extends Model
 {
     protected $table  = "com_mst";
     public $timestamps = false;
+    protected $guarded = []; 
 
     public function parkings () 
     {

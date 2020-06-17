@@ -19,185 +19,109 @@
     <!-- Container fluid  -->
     <div class="container-fluid">
         <!-- Start Page Content -->
+        <form class="form-valide" action="#" method="get">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Chọn thời gian thống kê</h4>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="control-label">Chọn Công ty</label>
+                                        <select class="form-control" id="statistic-company"
+                                                name="statistic-company">
+                                            <option value="">Chọn công ty</option>
+                                            <option value="1">Công ty Hitech</option>
+                                            <option value="2">Công ty số 2</option>
+                                            <option value="3">Công ty số 3</option>
+                                            <option value="4">Công ty số 4</option>
+                                        </select>
+                                    </div>
+                                </div>
+                               
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="control-label">Thời gian bắt đầu đầu</label>
+                                        <input type="datetime-local" class="form-control"
+                                                id="statistic-vehicle-time-start" name="search_time_start"
+                                                value="{{ old('search_time_start')}}"
+                                                placeholder="ngày/tháng/năm giờ:phút:giây">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="control-label">Thời gian kết thúc</label>
+                                        <input type="datetime-local" class="form-control"
+                                                id="statistic-vehicle-time-end" name="search_time_end"
+                                                value="{{ old('search_time_end')}}"
+                                                placeholder="ngày/tháng/năm giờ:phút:giây">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-warning btn-rounded m-b-10 m-l-5">
+                                            <i class="fa fa-search"></i> Tìm kiếm
+                                        </button>
+                                        <a 
+                                            class="btn btn-default btn-refresh btn-rounded m-b-10 m-l-5"
+                                            href="{{ route('statisticVehicle') }}"
+                                        >
+                                            <i class="fa fa-eraser"></i> Làm mới
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Thống kê</h4>
-                        <!-- Nav tabs -->
-                        <ul class="nav nav-tabs" role="tablist">
-                            <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#home"
-                                                    role="tab"><span class="hidden-sm-up"><i
-                                    class="ti-home"></i></span> <span
-                                    class="hidden-xs-down">Thống kê theo ngày</span></a></li>
-                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#profile"
-                                                    role="tab"><span class="hidden-sm-up"><i
-                                    class="ti-user"></i></span> <span
-                                    class="hidden-xs-down">Thống kê theo tháng</span></a></li>
-                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#messages"
-                                                    role="tab"><span class="hidden-sm-up"><i
-                                    class="ti-email"></i></span> <span
-                                    class="hidden-xs-down">Thống kê theo năm</span></a></li>
-                        </ul>
-                        <!-- Tab panes -->
-                        <div class="tab-content tabcontent-border">
-                            <div class="tab-pane active" id="home" role="tabpanel">
-                                <div class="p-20">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <form class="form-valide" action="#" method="post">
-                                                <div class="form-group">
-                                                    <label class="control-label">Chọn ngày</label>
-                                                    <input type="date" class="form-control"
-                                                            id="statistic-revenue-day" name="statistic-revenue-day"
-                                                            placeholder="ngày/tháng/năm">
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <div class="form-group">
-                                                <label class="control-label">Thống kê</label><br>
-                                                <button type="submit" class="btn btn-warning btn-rounded m-b-10 m-l-5">
-                                                    <i class="fa fa-search"></i> Tìm kiếm
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <h4 class="card-title">Số lượng loại xe</h4>
-                                            <div id="day-chart"></div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <h4>Thống kê chi tiết</h4>
-                                            <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
-                                                <thead>
-                                                <tr>
-                                                    <th>Loại xe</th>
-                                                    <th>Trong Bãi</th>
-                                                    <th>Đã ra</th>
-                                                    <th>Doanh thu</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td>Xe ô tô</td>
-                                                    <td>123</td>
-                                                    <td>456</td>
-                                                    <td>300.000 vnd</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Xe máy</td>
-                                                    <td>123</td>
-                                                    <td>456</td>
-                                                    <td>200.000 vnd</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Xe đạp</td>
-                                                    <td>123</td>
-                                                    <td>456</td>
-                                                    <td>100.000 vnd</td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="3" ><b>Tổng doanh thu</b></td>
-                                                    <td>600.000 vnd</td>
-                                                </tr>
-
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane  p-20" id="profile" role="tabpanel">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <form class="form-valide" action="#" method="post">
-                                            <div class="form-group">
-                                                <label class="control-label">Chọn tháng</label>
-                                                <input type="month" class="form-control"
-                                                        id="statistic-revenue-month" name="statistic-revenue-month"
-                                                        placeholder="tháng/năm">
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label class="control-label">Thống kê</label><br>
-                                            <button type="submit" class="btn btn-warning btn-rounded m-b-10 m-l-5">
-                                                <i class="fa fa-search"></i> Tìm kiếm
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <h4 class="card-title">Số lượng loại xe</h4>
-                                        <div id="month-chart"></div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <h4>Thống kê chi tiết</h4>
-                                        <table id="example25" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
-                                            <thead>
+                        <h4 class="card-title">Bảng thống kê doanh thu</h4>
+                        <h6 class="card-subtitle">Xuất dữ liệu với Copy, CSV, Excel, PDF & In</h6>
+                        <div class="table-responsive m-t-40">
+                            <table id="example23"
+                                    class="display nowrap table table-hover table-striped table-bordered"
+                                    cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Tên bãi</th>
+                                        <th>Loại xe</th>
+                                        <th>Doanh thu</th>
+                                        <th>%</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if(!empty($data))
+                                    @php 
+                                    $i = 1;
+                                    @endphp
+                                        @foreach($data as $item)
+                                            
+                                            @foreach($item->statistics as $statistic)
                                             <tr>
-                                                <th>Loại xe</th>
-                                                <th>Trong Bãi</th>
-                                                <th>Đã ra</th>
-                                                <th>Doanh thu</th>
+                                                <td rowspan="5">{{ $i++ }}</td>
+                                                <td rowspan="5">{{ $item->Parking_Area_Name ?? ''}}</td>
+                                                <td>{{ $statistic->Type_Vehicle_Name ?? ''}}</td>
+                                                <td>{{ number_format($statistic->revenue, 0) . ' VNĐ' ?? '0' }}</td>
+                                                <td>{{ round(($statistic->revenue/ $item->revenue)*100, 3) }}</td>
                                             </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr>
-                                                <td>Xe ô tô</td>
-                                                <td>123</td>
-                                                <td>456</td>
-                                                <td>300.000 vnd</td>
+                                            @endforeach
+                                            <tr class="title-table">
+                                                <td>Tổng</td>
+                                                <td>{{ number_format($item->revenue, 0) . ' VNĐ'  ?? '0' }}</td>
+                                                <td>100</td>
                                             </tr>
-                                            <tr>
-                                                <td>Xe máy</td>
-                                                <td>123</td>
-                                                <td>456</td>
-                                                <td>200.000 vnd</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Xe đạp</td>
-                                                <td>123</td>
-                                                <td>456</td>
-                                                <td>100.000 vnd</td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="3" ><b>Tổng doanh thu</b></td>
-                                                <td>600.000 vnd</td>
-                                            </tr>
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane p-20" id="messages" role="tabpanel">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <form class="form-valide" action="#" method="post">
-                                            <div class="form-group">
-                                                <label class="control-label">Chọn năm</label>
-                                                <input type="year" class="form-control"
-                                                        id="statistic-revenue-year" name="statistic-revenue-year"
-                                                        placeholder="năm">
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label class="control-label">Thống kê</label><br>
-                                            <button type="submit" class="btn btn-warning btn-rounded m-b-10 m-l-5">
-                                                <i class="fa fa-search"></i> Tìm kiếm
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <h4>Rồi sẽ có cái gì đó ở đây</h4>
-                            </div>
+                                        @endforeach
+                                    @endif
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -251,4 +175,23 @@
     </footer>
     <!-- End footer -->
 </div>
+@endsection
+
+
+@section('script')
+
+<script src={{ asset("/js/lib/morris-chart/raphael-min.js") }}></script>
+<script src={{ asset("/js/lib/morris-chart/morris.js") }}></script>
+<script src={{ asset("/js/chart-init/statistic-revenue.js") }}></script>
+
+
+<script src={{ asset("/js/lib/datatables/datatables.min.js") }}></script>
+<script src={{ asset("/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js") }}></script>
+<script src={{ asset("/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js") }}></script>
+<script src={{ asset("/js/lib/datatables/cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js") }}></script>
+<script src={{ asset("/js/lib/datatables/cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js") }}></script>
+<script src={{ asset("/js/lib/datatables/cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js") }}></script>
+<script src={{ asset("/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js") }}></script>
+<script src={{ asset("/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js") }}></script>
+<script src={{ asset("/js/lib/datatables/datatables-init.js") }}></script>
 @endsection

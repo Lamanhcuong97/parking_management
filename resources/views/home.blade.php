@@ -21,54 +21,58 @@
         <!-- Start Page Content -->
         <div class="row">
             <div class="col-md-3">
-                <div class="card p-30">
+                <div class="card p-20">
                     <div class="media">
                         <div class="media-top">
                             <div><span><i class="fa fa-usd f-s-40 color-primary"></i></span></div>
-                            <div class="media-top-right"> <h2>568120</h2></div>
+                            <div class="media-top-right"> <h2>{{ is_null($revenue) ? number_format(568120, 0) :  number_format($revenue, 2) }}</h2></div>
                         </div>
                         <div class="media-bottom">
-                            <p class="m-b-0">Tổng doanh thu tháng 6</p>
+                            <p class="m-b-0">Tổng doanh thu tháng {{ $now }}</p>
+                            <p class="m-b-0">(Đơn vị: VNĐ)</p>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="card p-30">
+                <div class="card p-20">
                     <div class="media">
                         <div class="media-top">
                             <div><span><i class="fa fa-car f-s-40 color-success"></i></span></div>
-                            <div class="media-top-right"> <h2>1178</h2></div>
+                            <div class="media-top-right"> <h2>{{ $data[0]->total ?? '123' }}</h2></div>
                         </div>
                         <div class="media-bottom">
                            
-                            <p class="m-b-0">Số xe ô tô gửi tháng 6</p>
+                            <p class="m-b-0">Số xe ô tô gửi tháng {{ $now }}</p>
+                            <p class="m-b-0">(Lượt xe)</p>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="card p-30">
+                <div class="card p-20">
                     <div class="media">
                         <div class="media-top">
                             <div><span><i class="fa fa-motorcycle f-s-40 color-warning"></i></span></div>
-                            <div class="media-top-right"><h2>2523</h2></div>
+                            <div class="media-top-right"><h2>{{ $data[1]->total ?? '123' }}</h2></div>
                         </div>
                         <div class="media-bottom">
-                            <p class="m-b-0">Số xe máy gửi tháng 6</p>
+                            <p class="m-b-0">Số xe máy gửi tháng {{ $now }}</p>
+                            <p class="m-b-0">(Lượt xe)</p>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="card p-30">
+                <div class="card p-20">
                     <div class="media">
                         <div class="media-top">
                             <div><span><i class="fa fa-bicycle f-s-40 color-danger"></i></span></div>
-                            <div class="media-top-right"><h2>847</h2></div>
+                            <div class="media-top-right"><h2>{{ $data[2]->total ?? '123' }}</h2></div>
                         </div>
                         <div class="media-bottom">
-                            <p class="m-b-0">Số xe đạp gửi tháng 6</p>
+                            <p class="m-b-0">Số xe đạp gửi tháng {{ $now }}</p>
+                            <p class="m-b-0">(Lượt xe)</p>
                         </div>
                     </div>
                 </div>
@@ -86,7 +90,17 @@
                 </div>
             </div>
             <div class="col-lg-4">
-                <div class="year-calendar"></div>
+                {{-- <div class="year-calendar"></div> --}}
+                <div class="year-calendar"> 
+                    
+                </div>
+                <div class="tooltip-date">
+                    <p id="tooltip-day"></p>
+                    <p id="tooltip-car"></p>
+                    <p id="tooltip-motobike"></p>
+                    <p id="tooltip-bike"></p>
+                    <p id="tooltip-revenue"></p>
+                </div>
             </div>
             <!-- column -->
         </div>
@@ -160,55 +174,53 @@
 <script>
     $( function () {
         "use strict";
+        var d = new Date();
+        var year = d.getFullYear();
+        var prev_year = year - 1;
+        var data = [];
+
+        $.ajax({
+            url: base_url +'statisticOfYear/' + year,
+            type: 'GET',
+            success: function(res) {
+               
+                let b=
+                {
+                    'period' : res.now,
+                    'car' : res.data.car,
+                    'motobike' : res.data.motobike,
+                    'bike' : res.data.bike,
+                    'revenue' : res.revenue
+                }
+
+                data.push(b);
+            }
+        });
+
+        $.ajax({
+            url: base_url +'statisticOfYear/' + prev_year,
+            type: 'GET',
+            success: function(res) {
+                let b=
+                {
+                    'period' : res.now,
+                    'car' : res.data.car,
+                    'motobike' : res.data.motobike,
+                    'bike' : res.data.bike,
+                    'revenue' : res.revenue
+                }
+
+                data.push(b);
+            }
+        });
+
+        console.log(data);
+
 
         // Extra chart
         Morris.Area( {
             element: 'extra-area-chart',
-            data: [ {
-                period: '2001',
-                car: 0,
-                bike: 0,
-                motobike: 0,
-                revenue: 0
-            }, {
-                period: '2002',
-                car: 10,
-                bike: 60,
-                motobike: 80,
-                revenue: 120
-            }, {
-                period: '2003',
-                car: 120,
-                bike: 10,
-                motobike: 30,
-                revenue: 50
-            }, {
-                period: '2004',
-                car: 0,
-                bike: 0,
-                motobike: 0,
-                revenue: 0
-            }, {
-                period: '2005',
-                car: 0,
-                bike: 0,
-                motobike: 150,
-                revenue: 0
-            }, {
-                period: '2006',
-                car: 160,
-                bike: 75,
-                motobike: 60,
-                revenue: 90
-            }, {
-                period: '2007',
-                car: 10,
-                bike: 120,
-                motobike: 60,
-                revenue: 30
-            }
-
-            ],
+            data: data,
             lineColors: [ '#26DAD2', '#fc6180', '#ffb64d', '#4680ff' ],
             xkey: 'period',
             ykeys: [ 'car', 'bike', 'motobike', 'revenue' ],

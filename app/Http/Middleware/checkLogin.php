@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 use App\User;
+use Session;
 
 class checkLogin
 {
@@ -17,14 +18,14 @@ class checkLogin
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        // dd($request->user());// sao no vao home r kia
-        dd(Auth::guard($guard)->check());
-        $user = User::where([
-            'User_Name' => $request->User_Name,
-            'Password' => md5($request->password)
-        ])->first();
-        dd($user);
-        if (!Auth::guard($guard)->check()) {
+        $user = Session::get('user');
+        $is_expire = Session::get('_token');
+
+        if(is_null($is_expire)){
+            Session::forget('user');
+        }
+            
+        if (is_null($user)) {
             return redirect('/login');
         }
     

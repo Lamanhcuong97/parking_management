@@ -8,6 +8,7 @@ class Role extends Model
 {
     protected $table  = "role_mst";
     public $timestamps = false;
+    protected $guarded = []; 
 
     public function user()
     {

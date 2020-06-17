@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
+use Session;
+use Validator;
 
 class LoginController extends Controller
 {
@@ -39,6 +41,7 @@ class LoginController extends Controller
     public function __construct()   
     {
         $this->middleware('guest')->except('logout');
+        
     }
 
     public function username()
@@ -46,49 +49,56 @@ class LoginController extends Controller
         return 'User_Name';
     }
 
-    // function login(Request $request){
+    public function showLoginForm()
+    {
+        $user = Session::get('user');
 
-    //     $this->validate($request, [
-    //         'User_Name' => 'required', 
-    //         'password' => 'required',
-    //     ]);
+        if (!is_null($user)) {
+            return redirect('/');
+        }
 
-    //     $user = User::where('User_Name', '=', $request->User_Name)->first();
-
-    //     if(isset($user)) {
-    //         if($user->Password == md5($request->password)) { // If their password is still MD5
-    //             Auth::login($user);
-    //         }
-    //     }
-
-    //     // dd(Auth::check());
-    //     // em check ở đây thì nó trả ra true rồi
-
-    //     if ( Auth::check() ) {
-    //         return redirect()->intended(route('home'));
-    //     }
-    // }
-    protected function attemptLogin(Request $request)
-{
-    $user = User::where([
-        'User_Name' => $request->User_Name,
-        'Password' => md5($request->password)
-    ])->first();
-    // dd(123, $user);
-    
-    if ($user) {
-        $this->guard()->login($user, $request->has('remember'));
-        // dd('x');// loi nay cung giong cua em a
-        // ?làm thế nào để nó xác thực ạ up len git di de a thu mo xem @@ vâng
-
-        return $request; // do cái này a ạ
+        return view('auth.login');
     }
 
-    return false;
-}
+    function login(Request $request){
 
-    
-    
+        $validatorRules = array(
+            'User_Name' => 'required', 
+            'password' => 'required',
+        );
+
+        $validator = Validator::make($request->all(), $validatorRules);
+
+        $user = User::where('User_Name', '=', $request->User_Name)->first();
+
+       
+        if(isset($user)) {
+
+            if($user->Password == md5($request->password)) { // If their password is still MD5
+                Session::put('user', $user);
+                Auth::login($user);
+                return redirect()->intended(route('home'));
+            }else {
+                $validator->messages()->add('User_Name', 'Thông tin đăng nhập chưa đúng.');
+                return redirect('/login')->withErrors($validator->errors());
+            }
+        }else{
+            $validator->messages()->add('User_Name', 'Thông tin đăng nhập chưa đúng.');
+            return redirect('/login')->withErrors($validator->errors());
+        }
+
+        // if ( Auth::check() ) {
+        //     return redirect()->intended(route('home'));
+        // }
+    }
+
+    public function logout(Request $request) {
+        Auth::logout();
+        Session::forget('user');
+        return redirect('/login');
+      }
+
+  
 
     /**
      * Validate the user login request.

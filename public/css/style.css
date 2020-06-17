@@ -92,6 +92,7 @@ body {
   margin: 0;
   overflow-x: hidden;
   color: #67757c;
+  font-size: 14px;
 }
 html {
   position: relative;
@@ -4881,7 +4882,7 @@ footer p {
   margin-bottom: 20px;
 }
 .form-control {
-  height: 42px;
+  height: 42px !important;
   border-radius: 0;
   box-shadow: none;
   border-color: #e7e7e7;

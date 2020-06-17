@@ -9,7 +9,9 @@ use App\Company;
 use App\Role;
 use Auth;
 use App\Http\Requests\UserRequest;
-Use \Carbon\Carbon;
+use \Carbon\Carbon;
+Use Alert;
+
 
 class UserManagementController extends Controller
 {
@@ -70,7 +72,7 @@ class UserManagementController extends Controller
     {
         $date = Carbon::now();
         $date = $date->toDateTimeString();
-        $role_id = isset(Auth::user()->Com_ID) ? Auth::user()->Com_ID : 'USR00000000000000001';
+        $user = Session::get('user');
 
         User::create([
             'User_Name' => $request->user_name,
@@ -80,10 +82,12 @@ class UserManagementController extends Controller
             'Delete_Flag' =>  0,
             'Phone' =>  $request->phone,
             'Mod_Date' =>  $date,
-            'Reg_UID' =>  $role_id,
-            'Mod_UID' =>  $role_id,
+            'Reg_UID' =>  $user->User_ID,
+            'Mod_UID' =>   $user->User_IDd,
             'password' => md5($request->password),
         ]);
+
+        toastr()->success('Dữ liệu được lưu thành công!');
 
         return redirect()->route('user-management.index');
     }
@@ -122,19 +126,23 @@ class UserManagementController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // Alert::question('Question Title', 'Question Message');
         $date = Carbon::now();
         $date = $date->toDateTimeString();
-        $role_id = isset(Auth::user()->Com_ID) ? Auth::user()->Com_ID : 'USR00000000000000001';
+        $user = Session::get('user');
+        
 
-        User::update([
+        User::where('User_ID', $id)->update([
             'Full_Name' =>  $request->full_name,
             'Role_ID' =>  $request->role_id,
             'Com_ID' =>  'CPM00000000000000001',
             'Delete_Flag' =>  0,
             'Phone' =>  $request->phone,
             'Mod_Date' =>  $date,
-            'Mod_UID' =>  $role_id,
+            'Mod_UID' =>  $user->User_ID,
         ]);
+
+        toastr()->success('Dữ liệu được lưu thành công!');
 
         return redirect()->route('user-management.index');
     }
@@ -147,6 +155,19 @@ class UserManagementController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $date = Carbon::now();
+        $date = $date->toDateTimeString();
+        $user = Session::get('user');
+        
+
+        User::where('User_ID', $id)->update([
+            'Delete_Flag' =>  1,
+            'Mod_Date' =>  $date,
+            'Mod_UID' =>  $user->User_ID,
+        ]);
+
+        toastr()->success('Dữ liệu được xóa thành công!');
+
+        return redirect()->route('user-management.index');
     }
 }

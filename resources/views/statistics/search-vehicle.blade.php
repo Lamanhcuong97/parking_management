@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('title', 'Tìm kiếm xe')
 
@@ -30,17 +30,13 @@
                                                     role="tab"><span class="hidden-sm-up"><i
                                     class="ti-home"></i></span> <span class="hidden-xs-down">Tìm kiếm xe</span></a>
                             </li>
-                            <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#detail"
-                                                    role="tab"><span class="hidden-sm-up"><i
-                                    class="ti-user"></i></span> <span class="hidden-xs-down">Chi tiết</span></a>
-                            </li>
                         </ul>
                         <!-- Tab panes -->
                         <div class="tab-content">
                             <div class="tab-pane active" id="search" role="tabpanel">
                                 <div class="p-20">
 
-                                    <form class="form-valide" action="#" method="post">
+                                    <form class="form-valide" action="#" method="get">
                                         <div class="card">
                                             <div class="card-body">
                                                 <h4 class="card-title">Tìm kiếm</h4>
@@ -55,19 +51,6 @@
                                                                 <option value="2">Công ty số 2</option>
                                                                 <option value="3">Công ty số 3</option>
                                                                 <option value="4">Công ty số 4</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <div class="form-group">
-                                                            <label class="control-label">Chọn bãi gửi</label>
-                                                            <select class="form-control" id="search-vehicle-parking"
-                                                                    name="search-vehicle-parking">
-                                                                <option value="">Chọn bãi gửi</option>
-                                                                <option value="1">Bãi gửi HV</option>
-                                                                <option value="2">Bãi gửi số 2</option>
-                                                                <option value="3">Bãi gửi số 3</option>
-                                                                <option value="4">Bãi gửi số 4</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -93,9 +76,15 @@
                                                                     placeholder="Nhập vào biển số">
                                                         </div>
                                                     </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group">
+                                                            <label class="control-label">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</label>
+                                                            <button type="submit" class="btn btn-warning btn-rounded m-b-10 m-l-5">
+                                                                <i class="fa fa-search"></i> Tìm kiếm
+                                                            </button>
+                                                        </div>
+                                                    </div>
                                                 </div>
-
-
                                                 <div class="row">
                                                     <div class="col-md-3">
                                                         <div class="form-group">
@@ -130,11 +119,13 @@
                                                     </div>
                                                     <div class="col-md-3">
                                                         <div class="form-group">
-                                                            <label class="control-label">Thống kê</label><br>
-                                                            <button type="submit"
-                                                                    class="btn btn-warning btn-rounded m-b-10 m-l-5">
-                                                                <i class="fa fa-search"></i> Tìm kiếm
-                                                            </button>
+                                                            <label class="control-label">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</label>
+                                                            <a 
+                                                                class="btn btn-default btn-refresh btn-rounded m-b-10 m-l-5"
+                                                                href="{{ route('statisticLogin') }}"
+                                                            >
+                                                                <i class="fa fa-eraser"></i> Làm mới
+                                                            </a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -153,170 +144,31 @@
                                                         cellspacing="0" width="100%">
                                                     <thead>
                                                     <tr>
-                                                        <th>Id</th>
-                                                        <th>Loại Xe</th>
+                                                        <th>#</th>
+                                                        <th>Loại xe</th>
                                                         <th>Biển số</th>
                                                         <th>Thời gian vào</th>
                                                         <th>Thời gian ra</th>
-                                                        <th>Mã vé</th>
                                                         <th>Trạng thái</th>
                                                         <th>Hành động</th>
                                                     </tr>
                                                     </thead>
-                                                    <tfoot>
-                                                    <tr>
-                                                        <th>Id</th>
-                                                        <th>Loại Xe</th>
-                                                        <th>Biển số</th>
-                                                        <th>Thời gian vào</th>
-                                                        <th>Thời gian ra</th>
-                                                        <th>Mã vé</th>
-                                                        <th>Trạng thái</th>
-                                                        <th>Hành động</th>
-                                                    </tr>
-                                                    </tfoot>
                                                     <tbody>
                                                     <tr>
                                                         <td>1</td>
-                                                        <td>Xe máy</td>
-                                                        <td>17B135166</td>
-                                                        <td>2018-06-22 04:04:38</td>
-                                                        <td>2018-06-22 06:04:38</td>
-                                                        <td>202cb962ac59075b964b07152d234b70</td>
-                                                        <td><span class="badge badge-success">Trong bãi</span></td>
-                                                        <td>
-                                                            <button type="submit" class="btn btn-warning">Chi tiết
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>2</td>
-                                                        <td>Xe ô tô</td>
-                                                        <td>30A132655</td>
-                                                        <td>2018-06-22 04:04:38</td>
-                                                        <td>2018-06-22 22:04:38</td>
-                                                        <td>202cb962ac59075b964b07152d234b70</td>
+                                                        <td>Ô tô</td>
+                                                        <td>Biển số</td>
+                                                        <td>Thời gian vào</td>
+                                                        <td>Thời gian ra</td>
                                                         <td><span class="badge badge-warning">Rời bãi</span></td>
-                                                        <td>
-                                                            <button type="submit" class="btn btn-warning">Chi tiết
-                                                            </button>
+                                                        <td class="table-action">
+                                                            <a type="submit" data-toggle="detail" title="Chi tiết!"   href="{{ route('detailVehicle', ['id'])}}" class="btn btn-warning">
+                                                                <i class="fa fa-asterisk" aria-hidden="true"></i>
+                                                            </a>
                                                         </td>
                                                     </tr>
-                                                    <tr>
-                                                        <td>3</td>
-                                                        <td>Xe máy</td>
-                                                        <td>17B135166</td>
-                                                        <td>2018-06-22 04:04:38</td>
-                                                        <td>2018-06-22 06:04:38</td>
-                                                        <td>202cb962ac59075b964b07152d234b70</td>
-                                                        <td><span class="badge badge-success">Trong bãi</span></td>
-                                                        <td>
-                                                            <button type="submit" class="btn btn-warning">Chi tiết
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>4</td>
-                                                        <td>Xe đạp</td>
-                                                        <td>30</td>
-                                                        <td>2018-06-22 04:04:38</td>
-                                                        <td>2018-06-22 22:04:38</td>
-                                                        <td>202cb962ac59075b964b07152d234b70</td>
-                                                        <td><span class="badge badge-warning">Rời bãi</span></td>
-                                                        <td>
-                                                            <button type="submit" class="btn btn-warning">Chi tiết
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-
-
                                                     </tbody>
                                                 </table>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="tab-pane  p-20" id="detail" role="tabpanel">
-                                <div class="p-20">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <h4 class="card-title">Thông tin chi tiết</h4>
-                                            <div class="row">
-                                                <div class="col-md-4 col-xs-4 b-r"><strong>Loại xe</strong>
-                                                    <br>
-                                                    <p class="text-muted">Xe ô tô</p>
-                                                </div>
-                                                <div class="col-md-4 col-xs-4 b-r"><strong>Biển số</strong>
-                                                    <br>
-                                                    <p class="text-muted">16B232354</p>
-                                                </div>
-                                                <div class="col-md-4 col-xs-4 b-r"><strong>Mã vé</strong>
-                                                    <br>
-                                                    <p class="text-muted">
-                                                        21e1a0b875fdb800db36d23c4f424e75</p>
-                                                </div>
-
-                                                <div class="col-md-4 col-xs-4 b-r"><strong>Thời gian
-                                                    vào</strong>
-                                                    <br>
-                                                    <p class="text-muted">2018-05-10 07:10:00</p>
-                                                </div>
-                                                <div class="col-md-4 col-xs-4 b-r"><strong>Thời gian
-                                                    ra</strong>
-                                                    <br>
-                                                    <p class="text-muted">2018-05-10 17:20:00</p>
-                                                </div>
-                                                <div class="col-md-4 col-xs-4 b-r"><strong>Tình
-                                                    trạng</strong>
-                                                    <br>
-                                                    <p class="text-muted">Trong bãi</p>
-                                                </div>
-
-                                                <div class="col-md-4 col-xs-4 b-r"><strong>Bãi gửi</strong>
-                                                    <br>
-                                                    <p class="text-muted">Bãi gửi HV Hà Đông</p>
-                                                </div>
-                                                <div class="col-md-4 col-xs-4 b-r"><strong>Bảo Vệ</strong>
-                                                    <br>
-                                                    <p class="text-muted">Trần Anh Tú</p>
-                                                </div>
-                                                <div class="col-md-4 col-xs-4 b-r"><strong>Phí gửi</strong>
-                                                    <br>
-                                                    <p class="text-muted">30.000 vnd</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="row">
-                                        <div class="col-8">
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <h4 class="card-title">Ảnh xe vào</h4>
-                                                    <div class="row">
-                                                        <div class="col-md-6 col-xs-6 b-r">
-                                                            <img style="width: 100%" src="../images/anh1.jpg">
-                                                        </div>
-                                                        <div class="col-md-6 col-xs-6 b-r">
-                                                            <img style="width: 100%" src="../images/anh2.jpg">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-4">
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <h4 class="card-title">Ảnh xe ra</h4>
-                                                    <div class="row">
-                                                        <div class="col-md-12 col-xs-12 b-r">
-                                                            <img style="width: 100%" src="../images/anh3.jpg">
-                                                        </div>
-                                                    </div>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -377,4 +229,27 @@
     </footer>
     <!-- End footer -->
 </div>
+@endsection
+
+@section('script')
+
+<script src={{ asset("/js/lib/morris-chart/raphael-min.js") }}></script>
+<script src={{ asset("/js/lib/morris-chart/morris.js") }}></script>
+<script src={{ asset("/js/chart-init/statistic-revenue.js") }}></script>
+
+
+<script src={{ asset("/js/lib/datatables/datatables.min.js") }}></script>
+<script src={{ asset("/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js") }}></script>
+<script src={{ asset("/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js") }}></script>
+<script src={{ asset("/js/lib/datatables/cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js") }}></script>
+<script src={{ asset("/js/lib/datatables/cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js") }}></script>
+<script src={{ asset("/js/lib/datatables/cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js") }}></script>
+<script src={{ asset("/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js") }}></script>
+<script src={{ asset("/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js") }}></script>
+<script src={{ asset("/js/lib/datatables/datatables-init.js") }}></script>
+<script>
+  $(document).ready(function(){
+      $('[data-toggle="detail"]').tooltip(); 
+  });
+</script>
 @endsection

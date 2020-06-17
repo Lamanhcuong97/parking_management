@@ -26,7 +26,7 @@
                         <div class="card-body">
                             <h4 class="card-title">Tìm kiếm công ty</h4>
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label class="control-label">Tên công ty</label>
                                     <input type="text" class="form-control" name="company_name" value="{{ old('company_name') }}" placeholder="Nhập vào tên công ty">
@@ -50,12 +50,17 @@
                                         <input type="text" class="form-control" name="company_email" value="{{ old('company_email') }}" placeholder="Nhập vào email công ty">
                                     </div>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <div class="form-group">
-                                        <label class="control-label">Tìm công ty</label><br>
                                         <button type="submit" class="btn btn-warning btn-rounded m-b-10 m-l-5">
                                             <i class="fa fa-search"></i> Tìm kiếm
                                         </button>
+                                        <a 
+                                            class="btn btn-default btn-refresh btn-rounded m-b-10 m-l-5"
+                                            href="{{ route('company-management.index') }}"
+                                        >
+                                            <i class="fa fa-eraser"></i> Làm mới
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -84,29 +89,26 @@
                                         <th>Hành động</th>
                                     </tr>
                                 </thead>
-                                <tfoot>
-                                    <tr>
-                                        <th>Id</th>
-                                        <th>Tên công ty</th>
-                                        <th>Địa chỉ</th>
-                                        <th>Số điện thoại</th>
-                                        <th>Email</th>
-                                        <th>Trạng thái</th>
-                                        <th>Hành động</th>
-                                    </tr>
-                                </tfoot>
                                 <tbody>
                                     @if(count($companies) !== 0)
+                                        @php
+                                            $no = 1;
+                                        @endphp
                                         @foreach($companies as $company)
                                             <tr>
-                                                <td>{{ $company->Com_ID }}</td>
+                                                <td>{{ $no++ }}</td>
                                                 <td>{{ $company->Com_Name }}</td>
                                                 <td>{{ $company->Com_Addr }}</td>
                                                 <td>{{ $company->Com_Phone }}</td>
                                                 <td>{{ $company->Com_Email }}</td>
                                                 <td><span class="badge {{ $company->Delete_Flag == 0 ? 'badge-success' : 'badge-danger' }}">{{ $company->Delete_Flag == 0 ? 'Hoạt động' : 'Ngừng hoạt động' }}</span></td>
-                                                <td>
-                                                    <a type="submit" href={{ route('company-management.show', [$company->Com_ID])}} class="btn btn-warning">Chi tiết</a>
+                                                <td class="table-action">
+                                                    <a type="submit" data-toggle="detail" title="Chi tiết!"  href={{ route('company-management.show', [$company->Com_ID])}} class="btn btn-warning"><i class="fa fa-asterisk" aria-hidden="true"></i></a>
+                                                    <form action="{{ route('company-management.destroy', [$company->Com_ID])}}" method="POST">
+                                                        {{method_field('DELETE')}}
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-danger btn-del" data-toggle="delete" title="Xóa!" ><i class="fa fa-trash"></i></button>
+                                                    </form>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -169,4 +171,53 @@
     </footer>
     <!-- End footer -->
 </div>
+@endsection
+
+
+@section('script')
+
+<script src={{ asset("/js/lib/morris-chart/raphael-min.js") }}></script>
+<script src={{ asset("/js/lib/morris-chart/morris.js") }}></script>
+<script src={{ asset("/js/chart-init/statistic-revenue.js") }}></script>
+
+
+<script src={{ asset("/js/lib/datatables/datatables.min.js") }}></script>
+<script src={{ asset("/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js") }}></script>
+<script src={{ asset("/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js") }}></script>
+<script src={{ asset("/js/lib/datatables/cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js") }}></script>
+<script src={{ asset("/js/lib/datatables/cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js") }}></script>
+<script src={{ asset("/js/lib/datatables/cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js") }}></script>
+<script src={{ asset("/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js") }}></script>
+<script src={{ asset("/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js") }}></script>
+<script src={{ asset("/js/lib/datatables/datatables-init.js") }}></script>
+<script>
+  $(document).ready(function(){
+      $('[data-toggle="delete"]').tooltip();   
+      $('[data-toggle="detail"]').tooltip();   
+
+
+      $('.btn-del').click(function (e) {
+            e.preventDefault();
+
+            var $form = $(this).closest('form');
+            
+            swal({
+                title: "Bạn có muốn?",
+                text: "Xóa dữ liệu không?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Có", 
+                cancelButtonText: "Không", 
+                closeOnConfirm: false
+            }, function (isConfirmed) {
+                if (isConfirmed) {
+                    $form.submit();
+                }
+            });
+
+            return false;
+        });  
+    });
+</script>
 @endsection

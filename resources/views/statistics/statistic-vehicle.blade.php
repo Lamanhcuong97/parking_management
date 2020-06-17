@@ -19,44 +19,34 @@
     <!-- Container fluid  -->
     <div class="container-fluid">
         <!-- Start Page Content -->
-        <form class="form-valide" action="#" method="post">
+        <form class="form-valide" action="{{ route('statisticVehicle')}}" method="get">
             <div class="row">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
                             <h4 class="card-title">Chọn thời gian thống kê</h4>
                             <div class="row">
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <div class="form-group">
                                         <label class="control-label">Chọn Công ty</label>
-                                        <select class="form-control" id="statistic-company"
+                                        <select class="form-control" id="search_company_id"
                                                 name="statistic-company">
-                                            <option value="">Chọn công ty</option>
-                                            <option value="1">Công ty Hitech</option>
-                                            <option value="2">Công ty số 2</option>
-                                            <option value="3">Công ty số 3</option>
-                                            <option value="4">Công ty số 4</option>
+                                            <option value="" selected disabled>Chọn công ty</option>
+                                            @if(count($companies) != 0)
+                                                @foreach($companies as $company)
+                                                    <option value="{{  $company->Com_ID }}" {{ old('company_id') == $company->Com_ID ? 'selected' : '' }}>{{  $company->Com_Name }}</option>
+                                                @endforeach
+                                            @endif
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label class="control-label">Chọn bãi gửi</label>
-                                        <select class="form-control" id="statistic-parking-area"
-                                                name="statistic-parking-area">
-                                            <option value="">Chọn Bãi</option>
-                                            <option value="1">Bãi gửi số 1</option>
-                                            <option value="2">Bãi gửi số 2</option>
-                                            <option value="3">Bãi gửi số 3</option>
-                                            <option value="4">Bãi gửi số 4</option>
-                                        </select>
-                                    </div>
-                                </div>
+                               
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label class="control-label">Thời gian bắt đầu đầu</label>
                                         <input type="datetime-local" class="form-control"
-                                                id="statistic-vehicle-time-start" name="statistic-vehicle-time-start"
+                                                id="statistic-vehicle-time-start" name="search_time_start"
+                                                value="{{ old('search_time_start')}}"
                                                 placeholder="ngày/tháng/năm giờ:phút:giây">
                                     </div>
                                 </div>
@@ -64,16 +54,22 @@
                                     <div class="form-group">
                                         <label class="control-label">Thời gian kết thúc</label>
                                         <input type="datetime-local" class="form-control"
-                                                id="statistic-vehicle-time-end" name="statistic-vehicle-time-end"
+                                                id="statistic-vehicle-time-end" name="search_time_end"
+                                                value="{{ old('search_time_end')}}"
                                                 placeholder="ngày/tháng/năm giờ:phút:giây">
                                     </div>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <div class="form-group">
-                                        <label class="control-label">Thống kê</label><br>
                                         <button type="submit" class="btn btn-warning btn-rounded m-b-10 m-l-5">
                                             <i class="fa fa-search"></i> Tìm kiếm
                                         </button>
+                                        <a 
+                                            class="btn btn-default btn-refresh btn-rounded m-b-10 m-l-5"
+                                            href="{{ route('statisticVehicle') }}"
+                                        >
+                                            <i class="fa fa-eraser"></i> Làm mới
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -94,84 +90,38 @@
                                     class="display nowrap table table-hover table-striped table-bordered"
                                     cellspacing="0" width="100%">
                                 <thead>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Loại Xe</th>
-                                    <th>Biển số</th>
-                                    <th>Thời gian vào</th>
-                                    <th>Thời gian ra</th>
-                                    <th>Mã vé</th>
-                                    <th>Phí gửi</th>
-                                    <th>Trạng thái</th>
-                                    <th>Hành động</th>
-                                </tr>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Tên bãi</th>
+                                        <th>Loại xe</th>
+                                        <th>Lượt xe</th>
+                                        <th>%</th>
+                                    </tr>
                                 </thead>
-                                <tfoot>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Loại Xe</th>
-                                    <th>Biển số</th>
-                                    <th>Thời gian vào</th>
-                                    <th>Thời gian ra</th>
-                                    <th>Mã vé</th>
-                                    <th>Phí gửi</th>
-                                    <th>Trạng thái</th>
-                                    <th>Hành động</th>
-                                </tr>
-                                </tfoot>
                                 <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Xe máy</td>
-                                    <td>17B135166</td>
-                                    <td>2018-06-22 04:04:38</td>
-                                    <td>2018-06-22 06:04:38</td>
-                                    <td>202cb962ac59075b964b07152d234b70</td>
-                                    <td>30.000</td>
-                                    <td><span class="badge badge-success">Trong bãi</span></td>
-                                    <td>
-                                        <button type="submit" class="btn btn-warning">Chi tiết</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Xe ô tô</td>
-                                    <td>30A132655</td>
-                                    <td>2018-06-22 04:04:38</td>
-                                    <td>2018-06-22 22:04:38</td>
-                                    <td>202cb962ac59075b964b07152d234b70</td>
-                                    <td>30.000</td>
-                                    <td><span class="badge badge-warning">Rời bãi</span></td>
-                                    <td>
-                                        <button type="submit" class="btn btn-warning">Chi tiết</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Xe máy</td>
-                                    <td>17B135166</td>
-                                    <td>2018-06-22 04:04:38</td>
-                                    <td>2018-06-22 06:04:38</td>
-                                    <td>202cb962ac59075b964b07152d234b70</td>
-                                    <td>30.000</td>
-                                    <td><span class="badge badge-success">Trong bãi</span></td>
-                                    <td>
-                                        <button type="submit" class="btn btn-warning">Chi tiết</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>Xe đạp</td>
-                                    <td>30</td>
-                                    <td>2018-06-22 04:04:38</td>
-                                    <td>2018-06-22 22:04:38</td>
-                                    <td>202cb962ac59075b964b07152d234b70</td>
-                                    <td>30.000</td>
-                                    <td><span class="badge badge-warning">Rời bãi</span></td>
-                                    <td>
-                                        <button type="submit" class="btn btn-warning">Chi tiết</button>
-                                    </td>
-                                </tr>
+                                    @if(!empty($data))
+                                    @php 
+                                    $i = 1;
+                                    @endphp
+                                        @foreach($data as $item)
+                                        <tr>
+                                            <td rowspan="5">{{ $i++ }}</td>
+                                            <td rowspan="5">{{ $item->Parking_Area_Name ?? '' }}</td>
+                                            @foreach($item->statistics as $statistic)
+                                            <tr>
+                                                <td>{{ $statistic->Type_Vehicle_Name ?? '' }}</td>
+                                                <td>{{ $statistic->total ?? '' }}</td>
+                                                <td>{{ round(($statistic->total/ $item->total)*100, 3) }}</td>
+                                            </tr>
+                                            @endforeach
+                                            <tr class="title-table">
+                                                <td>Tổng</td>
+                                                <td>{{ $item->total ?? '0' }}</td>
+                                                <td>100</td>
+                                            </tr>
+                                        </tr>
+                                        @endforeach
+                                    @endif
 
                                 </tbody>
                             </table>
@@ -227,4 +177,23 @@
     </footer>
     <!-- End footer -->
 </div>
+@endsection
+
+
+@section('script')
+
+<script src={{ asset("/js/lib/morris-chart/raphael-min.js") }}></script>
+<script src={{ asset("/js/lib/morris-chart/morris.js") }}></script>
+<script src={{ asset("/js/chart-init/statistic-revenue.js") }}></script>
+
+
+<script src={{ asset("/js/lib/datatables/datatables.min.js") }}></script>
+<script src={{ asset("/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js") }}></script>
+<script src={{ asset("/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js") }}></script>
+<script src={{ asset("/js/lib/datatables/cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js") }}></script>
+<script src={{ asset("/js/lib/datatables/cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js") }}></script>
+<script src={{ asset("/js/lib/datatables/cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js") }}></script>
+<script src={{ asset("/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js") }}></script>
+<script src={{ asset("/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js") }}></script>
+<script src={{ asset("/js/lib/datatables/datatables-init.js") }}></script>
 @endsection

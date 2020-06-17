@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use App\Company;
 use App\Parking;
 use Auth;
-Use \Carbon\Carbon;
+use \Carbon\Carbon;
+
 
 class ParkingManagementController extends Controller
 {
@@ -61,6 +62,7 @@ class ParkingManagementController extends Controller
     {
         $date = Carbon::now();
         $date = $date->toDateTimeString();
+        $user = Session::get('user');
 
         $parking = new Parking();
         $parking->Parking_Area_Name = $request->parking_area_name;
@@ -68,9 +70,10 @@ class ParkingManagementController extends Controller
         $parking->Mod_Date = $date;
         $parking->Com_ID = 'CPM00000000000000001';
         $parking->Mod_UID = '';
-        $parking->Reg_UID = isset(Auth::user()->Com_ID) ? Auth::user()->Com_ID : 'USR00000000000000001';
+        $parking->Reg_UID =  $user->User_ID;
         $parking->save();
 
+        toastr()->success('Dữ liệu được lưu thành công!');
         return redirect()->route('parking-management.index');
     }
 
@@ -109,13 +112,16 @@ class ParkingManagementController extends Controller
     {
         $date = Carbon::now();
         $date = $date->toDateTimeString();
+        $user = Session::get('user');
 
         $parking = Parking::where('Parking_Area_ID', $id);
 
         $parking->update(["Parking_Area_Name" =>  $request->parking_area_name]);
         $parking->update(["Delete_Flag" =>  $request->status]);
         $parking->update(["Mod_Date" =>  $date]);
-        $parking->update(["Mod_UID" =>  isset(Auth::user()->Com_ID) ? Auth::user()->Com_ID : 'USR00000000000000001']);
+        $parking->update(["Mod_UID" =>  $user->User_ID]);
+
+        toastr()->success('Dữ liệu được lưu thành công!');
 
         return redirect()->route('parking-management.index');
     }
@@ -128,6 +134,18 @@ class ParkingManagementController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $date = Carbon::now();
+        $date = $date->toDateTimeString();
+        $user = Session::get('user');
+
+        $parking = Parking::where('Parking_Area_ID', $id);
+
+        $parking->update(["Delete_Flag" =>  1]);
+        $parking->update(["Mod_UID" =>  $user->User_ID]);
+        $parking->update(["Mod_Date" =>   $date]);
+
+        toastr()->success('Dữ liệu được xóa thành công!');
+
+        return redirect()->route('parking-management.index');  
     }
 }

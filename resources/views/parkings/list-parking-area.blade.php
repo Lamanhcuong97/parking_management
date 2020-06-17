@@ -27,13 +27,13 @@
                         <div class="card-body">
                             <h4 class="card-title">Tìm kiếm bãi gửi</h4>
                             <div class="row">
-                                <div class="col-md-5">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="control-label">Tên bãi</label>
                                         <input type="text" class="form-control" name="parking_name" value='{{ old('parking_name')}}'placeholder="Nhập vào tên bãi">
                                     </div>
                                 </div>
-                                <div class="col-md-5">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="control-label">Tên công ty</label>
                                         <select class="form-control" id="statistic-parking-area"
@@ -47,12 +47,17 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <div class="form-group">
-                                        <label class="control-label">Tìm bãi</label><br>
                                         <button type="submit" class="btn btn-warning btn-rounded m-b-10 m-l-5">
                                             <i class="fa fa-search"></i> Tìm kiếm
                                         </button>
+                                        <a 
+                                            class="btn btn-default btn-refresh btn-rounded m-b-10 m-l-5"
+                                            href="{{ route('parking-management.index') }}"
+                                        >
+                                            <i class="fa fa-eraser"></i> Làm mới
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -74,11 +79,7 @@
                                 <tr>
                                     <th>Id</th>
                                     <th>Tên Bãi</th>
-                                    <th>Kinh độ</th>
-                                    <th>Vĩ độ</th>
                                     <th>Công ty</th>
-                                    <th>Cấu hình vé</th>
-                                    <th>Cấu hình hóa đơn</th>
                                     <th>Trạng thái</th>
                                     <th>Hành động</th>
                                 </tr>
@@ -87,29 +88,31 @@
                                 <tr>
                                     <th>Id</th>
                                     <th>Tên Bãi</th>
-                                    <th>Kinh độ</th>
-                                    <th>Vĩ độ</th>
                                     <th>Công ty</th>
-                                    <th>Cấu hình vé</th>
-                                    <th>Cấu hình hóa đơn</th>
                                     <th>Trạng thái</th>
                                     <th>Hành động</th>
                                 </tr>
                                 </tfoot>
                                 <tbody>
                                     @if(count($parkings) != 0)
+                                        @php
+                                            $no = 1;
+                                        @endphp
                                         @foreach($parkings as $parking)
                                             <tr>
-                                                <td>{{ $parking->Parking_Area_ID ?? '' }}</td>
+                                                <td>{{ $no++ }}</td>
                                                 <td>{{ $parking->Parking_Area_Name ?? '' }}</td>
-                                                <td>21.033548</td>
-                                                <td>105.954212</td>
                                                 <td>Công ty {{ $parking->company->Com_Name ?? '' }}</td>
-                                                <td>Bãi gửi số 1 - Hitech</td>
-                                                <td>Bãi gửi số 1 - Hitech</td>
                                                 <td><span class="badge {{ $parking->Delete_Flag == 0 ? 'badge-success' : 'badge-danger' }}">{{ $parking->Delete_Flag == 0 ? 'Hoạt động' : 'Ngừng hoạt động' }}</span></td>
-                                                <td>
-                                                    <a type="submit" href={{ route('parking-management.show', [$parking->Parking_Area_ID])}} class="btn btn-warning">Chi tiết</a>
+                                                <td class="table-action">
+                                                    <a type="submit" data-toggle="detail" title="Chi tiết!"  href={{ route('parking-management.show', [$parking->Parking_Area_ID])}} class="btn btn-warning">
+                                                        <i class="fa fa-asterisk" aria-hidden="true"></i>
+                                                    </a>
+                                                    <form action="{{ route('parking-management.destroy', [$parking->Parking_Area_ID])}}" method="POST">
+                                                        {{method_field('DELETE')}}
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-danger btn-del" data-toggle="delete" title="Xóa!" ><i class="fa fa-trash"></i></button>
+                                                    </form>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -172,4 +175,47 @@
     </footer>
     <!-- End footer -->
 </div>
+@endsection
+
+
+@section('script')
+
+<script src={{ asset("/js/lib/datatables/datatables.min.js") }}></script>
+<script src={{ asset("/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js") }}></script>
+<script src={{ asset("/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js") }}></script>
+<script src={{ asset("/js/lib/datatables/cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js") }}></script>
+<script src={{ asset("/js/lib/datatables/cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js") }}></script>
+<script src={{ asset("/js/lib/datatables/cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js") }}></script>
+<script src={{ asset("/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js") }}></script>
+<script src={{ asset("/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js") }}></script>
+<script src={{ asset("/js/lib/datatables/datatables-init.js") }}></script>
+<script>
+  $(document).ready(function(){
+      $('[data-toggle="delete"]').tooltip();   
+      $('[data-toggle="detail"]').tooltip();   
+
+      $('.btn-del').click(function (e) {
+            e.preventDefault();
+
+            var $form = $(this).closest('form');
+            
+            swal({
+                title: "Bạn có muốn?",
+                text: "Xóa dữ liệu không?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Có", 
+                cancelButtonText: "Không", 
+                closeOnConfirm: false
+            }, function (isConfirmed) {
+                if (isConfirmed) {
+                    $form.submit();
+                }
+            });
+
+            return false;
+        });
+    });
+</script>
 @endsection
