@@ -149,5 +149,6 @@ class HomeController extends Controller
     {
         $user = Session::get('user');
         return view('profile', ['user' => $user]);
+
     }
 }
