@@ -147,7 +147,11 @@ class HomeController extends Controller
 
     public function profile()
     {
+<<<<<<< HEAD
         $user = Session::get('user');
         return view('profile', ['user' => $user]);
+=======
+        return view('profile');
+>>>>>>> b578ee3941d54e5739135a11c2b4e92e63064e9f
     }
 }
