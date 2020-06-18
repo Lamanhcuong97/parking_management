@@ -113,13 +113,13 @@
                                                             <thead>
                                                                 <tr>
                                                                     <th>Id</th>
-                                                                    <th class="w-74">Bãi gửi</th>
+                                                                    <th class="w-76">Bãi gửi</th>
                                                                     <th class="w-74">Loại phương tiện</th>
-                                                                    <th class="w-79">Loại phí</th>
+                                                                    <th class="w-81">Loại phí</th>
                                                                     <th class="w-73">Block</th>
-                                                                    <th class="w-74">Phí gửi</th>
+                                                                    <th class="w-76">Phí gửi</th>
                                                                     <th class="w-73">Thời gian miễn phí</th>
-                                                                    <th class="w-78">Quá giờ</th>
+                                                                    <th class="w-81">Quá giờ</th>
                                                                     <th>Hành động</th>
                                                                 </tr>
                                                             </thead>
@@ -143,7 +143,7 @@
                                                                             </span>
                                                                         </td>
                                                                        <td class="table-action">
-                                                                            <a type="submit" data-toggle="detail" title="Chi tiết!"   href="#" class="btn btn-warning">
+                                                                            <a  data-toggle="detail" title="Chi tiết!"   href="{{ route('config.detailConfigFee', [$parking_fee->Parking_Fee_ID]) }}" class="btn btn-warning">
                                                                                 <i class="fa fa-asterisk" aria-hidden="true"></i>
                                                                             </a>
                                                                             <form action="#" method="POST">
@@ -384,7 +384,32 @@
             let value = $(this).val().toString().replace(/,/g, '');
 
             $(this).val(convertNumberToCurrency(value));
-        })
+        });
+
+
+        
+      $('.btn-del').click(function (e) {
+            e.preventDefault();
+
+            var $form = $(this).closest('form');
+            
+            swal({
+                title: "Bạn có muốn?",
+                text: "Xóa dữ liệu không?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Có", 
+                cancelButtonText: "Không", 
+                closeOnConfirm: false
+            }, function (isConfirmed) {
+                if (isConfirmed) {
+                    $form.submit();
+                }
+            });
+
+            return false;
+        });  
         
     });
 </script>

@@ -30,83 +30,25 @@
                                     <div class="card-body">
                                         <h4 class="card-title">Thông tin chi tiết</h4>
                                         <div class="row">
-                                            <div class="col-md-4 col-xs-4 b-r"><strong>Loại xe</strong>
-                                                <br>
-                                                <p class="text-muted">{{ $vehicle->vehicle_type->Type_Vehicle_Name ?? '' }}</p>
-                                            </div>
-                                            <div class="col-md-4 col-xs-4 b-r"><strong>Biển số</strong>
-                                                <br>
-                                                <p class="text-muted">{{ $vehicle->License_Plates ?? '' }}</p>
-                                            </div>
-                                            <div class="col-md-4 col-xs-4 b-r"><strong>Mã vé</strong>
-                                                <br>
-                                                <p class="text-muted">
-                                                {{ $vehicle->Ticket_Code ?? '' }}
-                                            </p>
-                                            </div>
-
-                                            <div class="col-md-4 col-xs-4 b-r"><strong>Thời gian
-                                                vào</strong>
-                                                <br>
-                                                <p class="text-muted">{{ $vehicle->Time_In ?? '' }}</p>
-                                            </div>
-                                            <div class="col-md-4 col-xs-4 b-r"><strong>Thời gian
-                                                ra</strong>
-                                                <br>
-                                                <p class="text-muted">{{ $vehicle->Time_Out ?? '' }}</p>
-                                            </div>
-                                            <div class="col-md-4 col-xs-4 b-r"><strong>Tình
-                                                trạng</strong>
-                                                <br>
-                                                <p class="text-muted">
-                                                    <span class="badge {{ $vehicle->Parking_Status == 1 ? 'badge-warning' :  'badge-danger'}} ">
-                                                        {{ $vehicle->Parking_Status == 1 ? 'Rời bãi' :  'Đang trong bãi'}}
-                                                    </span>
-                                                </p>
-                                            </div>
-
                                             <div class="col-md-4 col-xs-4 b-r"><strong>Bãi gửi</strong>
                                                 <br>
-                                                <p class="text-muted">{{ $vehicle->parking->Parking_Area_Name ?? '' }}</p>
+                                                <p class="text-muted">{{ $configParking->parking->Parking_Area_Name ?? '' }}</p>
                                             </div>
                                             <div class="col-md-4 col-xs-4 b-r"><strong>Bảo Vệ</strong>
                                                 <br>
-                                                <p class="text-muted">{{ $vehicle->vehicle_type->Type_Vehicle_Name ?? '' }}</p>
+                                                <p class="text-muted">{{ $configParking->user->User_Name ?? '' }}</p>
                                             </div>
-                                            <div class="col-md-4 col-xs-4 b-r"><strong>Phí gửi</strong>
+                                            <div class="col-md-4 col-xs-4 b-r"><strong>Địa chỉ</strong>
                                                 <br>
-                                                <p class="text-muted">{{ number_format($vehicle->Cost_Parking, 0) . ' VNĐ' ?? '0' }}</p>
+                                                <p class="text-muted">{{ $configParking->MAC_Addr ?? '' }}</p>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="row">
-                                    <div class="col-8">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <h4 class="card-title">Ảnh xe vào</h4>
-                                                <div class="row">
-                                                    <div class="col-md-6 col-xs-6 b-r">
-                                                        <img style="width: 100%" src="../images/anh1.jpg">
-                                                    </div>
-                                                    <div class="col-md-6 col-xs-6 b-r">
-                                                        <img style="width: 100%" src="../images/anh2.jpg">
-                                                    </div>
-                                                </div>
+                                            <div class="col-md-4 col-xs-4 b-r"><strong>Thời gian tạo</strong>
+                                                <br>
+                                                <p class="text-muted">{{ $configParking->Reg_Date ?? '' }}</p>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-4">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <h4 class="card-title">Ảnh xe ra</h4>
-                                                <div class="row">
-                                                    <div class="col-md-12 col-xs-12 b-r">
-                                                        <img style="width: 100%" src="../images/anh3.jpg">
-                                                    </div>
-                                                </div>
+                                            <div class="col-md-4 col-xs-4 b-r"><strong>Thời gian cập nhật</strong>
+                                                <br>
+                                                <p class="text-muted">{{ $configParking->Mod_Date ?? '' }}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -169,11 +111,6 @@
 @endsection
 
 @section('script')
-
-<script src={{ asset("/js/lib/morris-chart/raphael-min.js") }}></script>
-<script src={{ asset("/js/lib/morris-chart/morris.js") }}></script>
-<script src={{ asset("/js/chart-init/statistic-revenue.js") }}></script>
-
 
 <script src={{ asset("/js/lib/datatables/datatables.min.js") }}></script>
 <script src={{ asset("/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js") }}></script>

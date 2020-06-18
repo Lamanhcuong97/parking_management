@@ -30,12 +30,13 @@
                                     <div class="form-group">
                                         <label class="control-label">Chọn Công ty</label>
                                         <select class="form-control" id="statistic-company"
-                                                name="statistic-company">
-                                            <option value="">Chọn công ty</option>
-                                            <option value="1">Công ty Hitech</option>
-                                            <option value="2">Công ty số 2</option>
-                                            <option value="3">Công ty số 3</option>
-                                            <option value="4">Công ty số 4</option>
+                                                name="search_company_id">
+                                            <option value="" disabled selected>Chọn công ty</option>
+                                            @if(count($companies) != 0)
+                                                @foreach($companies as $company)
+                                                    <option value="{{  $company->Com_ID }}" {{ old('search_company_id') == $company->Com_ID ? 'selected' : '' }}>{{  $company->Com_Name }}</option>
+                                                @endforeach
+                                            @endif
                                         </select>
                                     </div>
                                 </div>

@@ -32,50 +32,28 @@
                                         <div class="row">
                                             <div class="col-md-4 col-xs-4 b-r"><strong>Loại xe</strong>
                                                 <br>
-                                                <p class="text-muted">{{ $vehicle->vehicle_type->Type_Vehicle_Name ?? '' }}</p>
+                                                <p class="text-muted">{{ $parkingFee->vehicle_type->Type_Vehicle_Name ?? '' }}</p>
                                             </div>
-                                            <div class="col-md-4 col-xs-4 b-r"><strong>Biển số</strong>
+                                            <div class="col-md-4 col-xs-4 b-r"><strong>Thời gian tạo</strong>
                                                 <br>
-                                                <p class="text-muted">{{ $vehicle->License_Plates ?? '' }}</p>
-                                            </div>
-                                            <div class="col-md-4 col-xs-4 b-r"><strong>Mã vé</strong>
-                                                <br>
-                                                <p class="text-muted">
-                                                {{ $vehicle->Ticket_Code ?? '' }}
-                                            </p>
-                                            </div>
-
-                                            <div class="col-md-4 col-xs-4 b-r"><strong>Thời gian
-                                                vào</strong>
-                                                <br>
-                                                <p class="text-muted">{{ $vehicle->Time_In ?? '' }}</p>
+                                                <p class="text-muted">{{ $parkingFee->Reg_Date ?? '' }}</p>
                                             </div>
                                             <div class="col-md-4 col-xs-4 b-r"><strong>Thời gian
-                                                ra</strong>
+                                                cập nhật</strong>
                                                 <br>
-                                                <p class="text-muted">{{ $vehicle->Time_Out ?? '' }}</p>
+                                                <p class="text-muted">{{ $parkingFee->Mod_Date ?? '' }}</p>
                                             </div>
-                                            <div class="col-md-4 col-xs-4 b-r"><strong>Tình
-                                                trạng</strong>
-                                                <br>
-                                                <p class="text-muted">
-                                                    <span class="badge {{ $vehicle->Parking_Status == 1 ? 'badge-warning' :  'badge-danger'}} ">
-                                                        {{ $vehicle->Parking_Status == 1 ? 'Rời bãi' :  'Đang trong bãi'}}
-                                                    </span>
-                                                </p>
-                                            </div>
-
                                             <div class="col-md-4 col-xs-4 b-r"><strong>Bãi gửi</strong>
                                                 <br>
-                                                <p class="text-muted">{{ $vehicle->parking->Parking_Area_Name ?? '' }}</p>
-                                            </div>
-                                            <div class="col-md-4 col-xs-4 b-r"><strong>Bảo Vệ</strong>
-                                                <br>
-                                                <p class="text-muted">{{ $vehicle->vehicle_type->Type_Vehicle_Name ?? '' }}</p>
+                                                <p class="text-muted">{{ $parkingFee->parking->Parking_Area_Name ?? '' }}</p>
                                             </div>
                                             <div class="col-md-4 col-xs-4 b-r"><strong>Phí gửi</strong>
                                                 <br>
-                                                <p class="text-muted">{{ number_format($vehicle->Cost_Parking, 0) . ' VNĐ' ?? '0' }}</p>
+                                                <p class="text-muted">{{ number_format($parkingFee->Unit_Price, 0) . ' VNĐ' ?? '0' }}</p>
+                                            </div>
+                                            <div class="col-md-4 col-xs-4 b-r"><strong>Phí gửi cao nhất trong ngày</strong>
+                                                <br>
+                                                <p class="text-muted">{{ number_format($parkingFee->Max_Price, 0) . ' VNĐ' ?? '0' }}</p>
                                             </div>
                                         </div>
                                     </div>

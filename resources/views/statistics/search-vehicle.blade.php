@@ -45,12 +45,13 @@
                                                         <div class="form-group">
                                                             <label class="control-label">Chọn Công ty</label>
                                                             <select class="form-control" id="search-vehicle-company"
-                                                                    name="search-vehicle-company">
-                                                                <option value="">Chọn công ty</option>
-                                                                <option value="1">Công ty Hitech</option>
-                                                                <option value="2">Công ty số 2</option>
-                                                                <option value="3">Công ty số 3</option>
-                                                                <option value="4">Công ty số 4</option>
+                                                                    name="search_company_id">
+                                                                <option value="" disabled selected>Chọn công ty</option>
+                                                                @if(count($companies) != 0)
+                                                                    @foreach($companies as $company)
+                                                                        <option value="{{  $company->Com_ID }}" {{ old('search_company_id') == $company->Com_ID ? 'selected' : '' }}>{{  $company->Com_Name }}</option>
+                                                                    @endforeach
+                                                                @endif
                                                             </select>
                                                         </div>
                                                     </div>
@@ -59,11 +60,18 @@
                                                             <label class="control-label">Chọn loại xe</label>
                                                             <select class="form-control"
                                                                     id="search-vehicle-type-vehicle"
-                                                                    name="search-vehicle-type-vehicle">
-                                                                <option value="">Chọn loại xe</option>
-                                                                <option value="1">Xe ô tô</option>
-                                                                <option value="2">Xe máy</option>
-                                                                <option value="3">Xe đạp</option>
+                                                                    name="search_vehicle_type">
+                                                                <option value="" selected disabled>Chọn loại xe</option>
+                                                                @if(count($vehicle_types) != 0)
+                                                                    @foreach($vehicle_types as $vehicle_type)
+                                                                        <option 
+                                                                            value="{{ $vehicle_type->Type_Vehicle_ID }}"
+                                                                            {{ old('search_vehicle_type') == $vehicle_type->Type_Vehicle_ID ? 'selected' : '' }}
+                                                                        >
+                                                                            {{ $vehicle_type->Type_Vehicle_Name }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                @endif
                                                             </select>
                                                         </div>
                                                     </div>
@@ -72,8 +80,10 @@
                                                             <label class="control-label">Biển số</label>
                                                             <input type="text" class="form-control"
                                                                     id="search-vehicle-lp"
-                                                                    name="search-vehicle-lp"
-                                                                    placeholder="Nhập vào biển số">
+                                                                    name="search_vehicle_lp"
+                                                                    placeholder="Nhập vào biển số"
+                                                                    value="{{ old('search_vehicle_lp')}}"
+                                                                    >
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3">
@@ -91,10 +101,11 @@
                                                             <label class="control-label">Trạng thái</label>
                                                             <select class="form-control"
                                                                     id="search-vehicle-status"
-                                                                    name="search-vehicle-status">
-                                                                <option value="">Chọn trạng thái</option>
-                                                                <option value="1">Trong bãi</option>
-                                                                <option value="2">Rời bãi</option>
+                                                                    name="search_vehicle_status">
+                                                                <option value="" disabled selected>Chọn trạng thái  {{ old('search_vehicle_status') }}</option>
+                                                               
+                                                                <option value="0" {{ old('search_vehicle_status') == "0" ? 'selected' : ''}}>Trong bãi</option>
+                                                                <option value="1" {{ old('search_vehicle_status') == "1" ? 'selected' : ''}}>Rời bãi</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -104,8 +115,10 @@
                                                                 đầu</label>
                                                             <input type="datetime-local" class="form-control"
                                                                     id="search-vehicle-time-start"
-                                                                    name="search-vehicle-time-start"
-                                                                    placeholder="ngày/tháng/năm giờ:phút:giây">
+                                                                    name="search_time_start"
+                                                                    placeholder="ngày/tháng/năm giờ:phút:giây"
+                                                                    value="{{ old('search_time_start') }}"
+                                                                    >
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3">
@@ -113,8 +126,11 @@
                                                             <label class="control-label">Thời gian kết thúc</label>
                                                             <input type="datetime-local" class="form-control"
                                                                     id="search-vehicle-time-end"
-                                                                    name="search-vehicle-time-end"
-                                                                    placeholder="ngày/tháng/năm giờ:phút:giây">
+                                                                    name="search_time_end"
+                                                                    placeholder="ngày/tháng/năm giờ:phút:giây"
+                                                                    value="{{ old('search_time_end') }}"
+                                                                    >
+
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3">
@@ -122,7 +138,7 @@
                                                             <label class="control-label">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</label>
                                                             <a 
                                                                 class="btn btn-default btn-refresh btn-rounded m-b-10 m-l-5"
-                                                                href="{{ route('statisticLogin') }}"
+                                                                href="{{ route('searchVehicle') }}"
                                                             >
                                                                 <i class="fa fa-eraser"></i> Làm mới
                                                             </a>
@@ -154,19 +170,26 @@
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>Ô tô</td>
-                                                        <td>Biển số</td>
-                                                        <td>Thời gian vào</td>
-                                                        <td>Thời gian ra</td>
-                                                        <td><span class="badge badge-warning">Rời bãi</span></td>
-                                                        <td class="table-action">
-                                                            <a type="submit" data-toggle="detail" title="Chi tiết!"   href="{{ route('detailVehicle', ['id'])}}" class="btn btn-warning">
-                                                                <i class="fa fa-asterisk" aria-hidden="true"></i>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
+                                                    @if(count($vehicles) != 0)
+                                                        @php 
+                                                        $i = 1;
+                                                        @endphp
+                                                        @foreach($vehicles as $vehicle)
+                                                            <tr>
+                                                                <td>{{ $i++ }}</td>
+                                                                <td>{{ $vehicle->vehicle_type->Type_Vehicle_Name ?? '' }}</td>
+                                                                <td>{{ $vehicle->License_Plates ?? '' }}</td>
+                                                                <td>{{ $vehicle->Time_In ?? ''}}</td>
+                                                                <td>{{ $vehicle->Time_Out ?? '' }}</td>
+                                                                <td><span class="badge {{ $vehicle->Parking_Status == 1 ? 'badge-warning' :  'badge-danger'}} ">{{ $vehicle->Parking_Status == 1 ? 'Rời bãi' :  'Đang trong bãi'}}</span></td>
+                                                                <td class="table-action">
+                                                                    <a type="submit" data-toggle="detail" title="Chi tiết!"   href="{{ route('detailVehicle', [$vehicle->Parking_ID])}}" class="btn btn-warning">
+                                                                        <i class="fa fa-asterisk" aria-hidden="true"></i>
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    @endif
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -232,11 +255,6 @@
 @endsection
 
 @section('script')
-
-<script src={{ asset("/js/lib/morris-chart/raphael-min.js") }}></script>
-<script src={{ asset("/js/lib/morris-chart/morris.js") }}></script>
-<script src={{ asset("/js/chart-init/statistic-revenue.js") }}></script>
-
 
 <script src={{ asset("/js/lib/datatables/datatables.min.js") }}></script>
 <script src={{ asset("/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js") }}></script>

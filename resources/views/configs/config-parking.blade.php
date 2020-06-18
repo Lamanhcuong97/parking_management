@@ -155,7 +155,7 @@
                                                                                 </span>
                                                                             </td>
                                                                             <td class="table-action">
-                                                                                <a type="submit" data-toggle="detail" title="Chi tiết!"   href="#" class="btn btn-warning">
+                                                                                <a type="submit" data-toggle="detail" title="Chi tiết!"  href="{{ route('config.detailConfigParking', [$config_parking->Set_Parking_ID]) }}" class="btn btn-warning">
                                                                                     <i class="fa fa-asterisk" aria-hidden="true"></i>
                                                                                 </a>
                                                                                 <form action="#" method="POST">

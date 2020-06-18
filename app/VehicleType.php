@@ -15,4 +15,9 @@ class VehicleType extends Model
         return $this->hasMany('App\ParkingFee', 'Vehicle_ID',  'Type_Vehicle_ID');
     }
 
+    public function vehicles()
+    {
+        return $this->hasMany('App\StatisticParking', 'Vehicle_ID',  'Type_Vehicle_ID');
+    }
+
 }

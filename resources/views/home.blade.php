@@ -182,45 +182,40 @@
         $.ajax({
             url: base_url +'statisticOfYear/' + year,
             type: 'GET',
+            async: false,
             success: function(res) {
-               
-                let b=
-                {
-                    'period' : res.now,
-                    'car' : res.data.car,
-                    'motobike' : res.data.motobike,
-                    'bike' : res.data.bike,
-                    'revenue' : res.revenue
+                data['data_current_year'] = {
+                    'period': res.now, 
+                    'car': res.data.car, 
+                    'motobike': res.data.motobike, 
+                    'bike': res.data.bike, 
+                    'revenue': res.revenue
                 }
-
-                data.push(b);
             }
         });
 
         $.ajax({
             url: base_url +'statisticOfYear/' + prev_year,
             type: 'GET',
+            async: false,
             success: function(res) {
-                let b=
-                {
-                    'period' : res.now,
-                    'car' : res.data.car,
-                    'motobike' : res.data.motobike,
-                    'bike' : res.data.bike,
-                    'revenue' : res.revenue
+                
+                data['data_prev_year'] = {
+                    'period': res.now, 
+                    'car': res.data.car, 
+                    'motobike': res.data.motobike, 
+                    'bike': res.data.bike, 
+                    'revenue': res.revenue
                 }
-
-                data.push(b);
             }
         });
 
-        console.log(data);
-
-
-        // Extra chart
         Morris.Area( {
             element: 'extra-area-chart',
-            data: data,
+            data: [
+                data['data_prev_year'],
+                data['data_current_year']
+            ],
             lineColors: [ '#26DAD2', '#fc6180', '#ffb64d', '#4680ff' ],
             xkey: 'period',
             ykeys: [ 'car', 'bike', 'motobike', 'revenue' ],

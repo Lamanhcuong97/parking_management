@@ -155,10 +155,12 @@ class CompanyManagementController extends Controller
 
         $company = Company::where('Com_ID', $id);
 
-        $company->update(["Delete_Flag" =>  $request->status]);
+        $company->update(["Delete_Flag" =>  1]);
         $company->update(["Mod_Date" =>  $date]);
         $company->update(["Mod_UID" =>  $user->User_ID]);
 
-        toastr()->success('Dữ liệu được lưu thành công!');
+        toastr()->success('Dữ liệu được xóa thành công!');
+        
+        return redirect()->route('company-management.index');
     }
 }

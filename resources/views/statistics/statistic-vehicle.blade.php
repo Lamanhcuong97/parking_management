@@ -30,11 +30,11 @@
                                     <div class="form-group">
                                         <label class="control-label">Chọn Công ty</label>
                                         <select class="form-control" id="search_company_id"
-                                                name="statistic-company">
+                                                name="search_company_id">
                                             <option value="" selected disabled>Chọn công ty</option>
                                             @if(count($companies) != 0)
                                                 @foreach($companies as $company)
-                                                    <option value="{{  $company->Com_ID }}" {{ old('company_id') == $company->Com_ID ? 'selected' : '' }}>{{  $company->Com_Name }}</option>
+                                                    <option value="{{  $company->Com_ID }}" {{ old('search_company_id') == $company->Com_ID ? 'selected' : '' }}>{{  $company->Com_Name }}</option>
                                                 @endforeach
                                             @endif
                                         </select>

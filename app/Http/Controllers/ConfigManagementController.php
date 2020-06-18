@@ -130,4 +130,52 @@ class ConfigManagementController extends Controller
         toastr()->success('Dữ liệu được lưu thành công!');
         return redirect()->route('config.configParking');
     }
+
+    public function detailConfigParking($id)
+    {
+        $configParking = ConfigParking::with(['parking', 'user'])->where('Set_Parking_ID', $id)->first();
+
+        return view('configs.detail_config_parking', ['configParking' => $configParking]);
+    }
+
+    public function detailConfigFee($id)
+    {
+        $parkingFee = ParkingFee::with('vehicle_type', 'parking')->where('Parking_Fee_ID', $id)->first();
+
+        return view('configs.detail_config_fee', ['parkingFee' => $parkingFee]);
+    }
+
+    public function destroyConfigParking($id)
+    {
+        $date = Carbon::now();
+        $date = $date->toDateTimeString();
+        $user = Session::get('user');
+
+        $company = ConfigParking::where('Set_Parking_ID', $id);
+
+        $company->update(["Delete_Flag" =>  1]);
+        $company->update(["Mod_Date" =>  $date]);
+        $company->update(["Mod_UID" =>  $user->User_ID]);
+
+        toastr()->success('Dữ liệu được xóa thành công!');
+
+        return redirect()->route('config.configParking');
+    }
+
+    public function destroyConfigFee($id)
+    {
+        $date = Carbon::now();
+        $date = $date->toDateTimeString();
+        $user = Session::get('user');
+
+        $company = ParkingFee::where('Parking_Fee_ID', $id);
+
+        $company->update(["Delete_Flag" =>  $request->status]);
+        $company->update(["Mod_Date" =>  $date]);
+        $company->update(["Mod_UID" =>  $user->User_ID]);
+
+        toastr()->success('Dữ liệu được xóa thành công!');
+
+        return redirect()->route('config.configFee');
+    }
 }

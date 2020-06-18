@@ -135,7 +135,7 @@ class HomeController extends Controller
         return response()->json([
             'isEmpty' => false,
             'data' => $statisticVehicle,
-            'revenue' => is_null($revenue) ? 0 : $revenue , 
+            'revenue' => is_null($revenue) ? 0 : $revenue, 
             'now' => $request->year
             ]);
     }
