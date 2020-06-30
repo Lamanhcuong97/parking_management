@@ -39,7 +39,7 @@
                     <div class="media">
                         <div class="media-top">
                             <div><span><i class="fa fa-car f-s-40 color-success"></i></span></div>
-                            <div class="media-top-right"> <h2>{{ $data[0]->total ?? '123' }}</h2></div>
+                            <div class="media-top-right"> <h2>{{ $data[0]->total ?? '0' }}</h2></div>
                         </div>
                         <div class="media-bottom">
                            
@@ -54,7 +54,7 @@
                     <div class="media">
                         <div class="media-top">
                             <div><span><i class="fa fa-motorcycle f-s-40 color-warning"></i></span></div>
-                            <div class="media-top-right"><h2>{{ $data[1]->total ?? '123' }}</h2></div>
+                            <div class="media-top-right"><h2>{{ $data[1]->total ?? '0' }}</h2></div>
                         </div>
                         <div class="media-bottom">
                             <p class="m-b-0">Số xe máy gửi tháng {{ $now }}</p>
@@ -68,7 +68,7 @@
                     <div class="media">
                         <div class="media-top">
                             <div><span><i class="fa fa-bicycle f-s-40 color-danger"></i></span></div>
-                            <div class="media-top-right"><h2>{{ $data[2]->total ?? '123' }}</h2></div>
+                            <div class="media-top-right"><h2>{{ $data[2]->total ?? '0' }}</h2></div>
                         </div>
                         <div class="media-bottom">
                             <p class="m-b-0">Số xe đạp gửi tháng {{ $now }}</p>

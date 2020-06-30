@@ -30,8 +30,8 @@ class HomeController extends Controller
             ? (new Carbon($request->search_time_start))->toDateString() . ' 00:00:00' 
             : Carbon::now()->subDays(Carbon::now()->day - 1)->toDateString() . ' 00:00:00';
         $to = !is_null($request->search_time_start) 
-            ? (new Carbon($request->search_time_end))->toDateString() . ' 00:00:00' 
-            : Carbon::now()->toDateString() . ' 00:00:00';
+            ? (new Carbon($request->search_time_end))->toDateString() . ' 23:59:59' 
+            : Carbon::now()->toDateString() . ' 23:59:59';
 
         $now = Carbon::now()->month . "-" .Carbon::now()->year;
 
@@ -58,7 +58,6 @@ class HomeController extends Controller
         })
         ->whereBetween('Mod_Date', [$from, $to])
         ->first()->revenue;
-
 
         return view('home', ['data' => $data, 'revenue' => $revenue, 'now' => $now]);
     }
@@ -168,6 +167,7 @@ class HomeController extends Controller
                     break;
             }
         }
+
 
         return response()->json([
             'isEmpty' => false,
