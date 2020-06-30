@@ -158,11 +158,6 @@
                                                                                 <a type="submit" data-toggle="detail" title="Chi tiết!"  href="{{ route('config.detailConfigParking', [$config_parking->Set_Parking_ID]) }}" class="btn btn-warning">
                                                                                     <i class="fa fa-asterisk" aria-hidden="true"></i>
                                                                                 </a>
-                                                                                <form action="#" method="POST">
-                                                                                    {{method_field('DELETE')}}
-                                                                                    @csrf
-                                                                                    <button type="submit" class="btn btn-danger btn-del" data-toggle="delete" title="Xóa!" ><i class="fa fa-trash"></i></button>
-                                                                                </form>
                                                                             </td>
                                                                         </tr>
                                                                         @endforeach
@@ -182,7 +177,7 @@
                             </div>
                             <div class="tab-pane  p-20" id="profile" role="tabpanel">
                                 <div class="row justify-content-center">
-                                    <div class="col-6">
+                                    <div class="col-md-6 col-sm-12">
                                         <form class="form-valide" action="{{ route('config.setConfigParking') }}" method="post">
                                             @csrf
                                             <div class="form-group row">
@@ -291,31 +286,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-5">
-                        <div class="foot-links">
-                            <h4> LIÊN KẾT </h4>
-                            <ul>
-                                <li><a href="../index.html">Trang chủ</a></li>
-                                <li><a href="http://www.hitechviet.com/" target="_blank">Hitech</a></li>
-                                <li><a href="#" target="_blank"></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="contact-info">
-                            <h4> LIÊN HỆ</h4>
-                            <ul>
-                                <li><i class="fa fa-phone-square"></i> Hotline: (84-4) 934 466 269</li>
-                                <li><i class="fa fa-envelope"></i> E-mail: <a class="mail-link" href="mailto:info@hitechviet.com">info@hitechviet.com</a></li>
-                            </ul>
-                        </div>
-                    </div>
+                     
                 </div>
             </div>
         </div>
         <div class="footer-foot">
             <div class="container-fluid">
-                <p>Bản quyền thuộc về Công ty Cổ Phần Hitech Việt Nam</p>
+                <p>  &copy;Bản quyền thuộc về Công ty Cổ Phần Pichiche Việt Nam</p>
             </div>
         </div>
     </footer>

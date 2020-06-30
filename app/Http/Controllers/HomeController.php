@@ -15,9 +15,8 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        
+    public function __construct(){
+        parent::__construct();
     }
 
     /**
@@ -34,16 +33,29 @@ class HomeController extends Controller
             ? (new Carbon($request->search_time_end))->toDateString() . ' 00:00:00' 
             : Carbon::now()->toDateString() . ' 00:00:00';
 
-        $now = Carbon::now()->month . "-" .Carbon::now()->year;;
+        $now = Carbon::now()->month . "-" .Carbon::now()->year;
 
-        $data = DB::table('parking_fee')
+        $user = Session::get('user');
+        $company_id = $user->Com_ID;
+
+        $data = DB::table('parking_tbl')
         ->select('Vehicle_ID' , DB::raw('count(*) as total'))
-        // ->whereBetween('Mod_Date', [$from, $to])
+        ->whereBetween('Mod_Date', [$from, $to])
+        ->whereExists(function ($query) use ($company_id) {
+            $query->select(DB::raw(1))
+                ->from('parking_area_mst')
+                ->where('Com_ID', $company_id);
+        })
         ->groupBy('Vehicle_ID')
         ->get()->toArray();
 
         $revenue = DB::table('parking_tbl')
         ->select(DB::raw('SUM(parking_tbl.Cost_Parking) as revenue'))
+        ->whereExists(function ($query) use ($company_id) {
+            $query->select(DB::raw(1))
+                ->from('parking_area_mst')
+                ->where('Com_ID', $company_id);
+        })
         ->whereBetween('Mod_Date', [$from, $to])
         ->first()->revenue;
 
@@ -53,16 +65,28 @@ class HomeController extends Controller
 
     public function statisticOfDay(Request $request)
     {
-       
+        $user = Session::get('user');
+        $company_id = $user->Com_ID;
+
         $data = DB::table('parking_tbl')
         ->select('Vehicle_ID' , DB::raw('count(*) as total'))
         ->whereDate('Mod_Date', $request->day)
+        ->whereExists(function ($query) use ($company_id) {
+            $query->select(DB::raw(1))
+                ->from('parking_area_mst')
+                ->where('Com_ID', $company_id);
+        })
         ->groupBy('Vehicle_ID')
         ->get()->toArray();
 
         $revenue = DB::table('parking_tbl')
         ->select(DB::raw('SUM(parking_tbl.Cost_Parking) as revenue'))
         ->whereDate('Mod_Date', $request->day)
+        ->whereExists(function ($query) use ($company_id) {
+            $query->select(DB::raw(1))
+                ->from('parking_area_mst')
+                ->where('Com_ID', $company_id);
+        })
         ->first()->revenue;
 
         if(count($data) == 0){
@@ -102,15 +126,28 @@ class HomeController extends Controller
 
     public function statisticOfYear(Request $request)
     {
+        $user = Session::get('user');
+        $company_id = $user->Com_ID;
+
         $data = DB::table('parking_tbl')
         ->select('Vehicle_ID' , DB::raw('count(*) as total'))
         ->whereYear('Mod_Date', $request->year)
+        ->whereExists(function ($query) use ($company_id) {
+            $query->select(DB::raw(1))
+                ->from('parking_area_mst')
+                ->where('Com_ID', $company_id);
+        })
         ->groupBy('Vehicle_ID')
         ->get()->toArray();
 
         $revenue = DB::table('parking_tbl')
         ->select(DB::raw('SUM(parking_tbl.Cost_Parking) as revenue'))
         ->whereYear('Mod_Date', $request->year)
+        ->whereExists(function ($query) use ($company_id) {
+            $query->select(DB::raw(1))
+                ->from('parking_area_mst')
+                ->where('Com_ID', $company_id);
+        })
         ->first()->revenue;
 
         $statisticVehicle = ['car' => 0, 'motobike' => 0, 'bike' => 0];

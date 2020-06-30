@@ -33,30 +33,6 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-lg-4 col-form-label" for="val-config-ticket">Cấu hình vé gửi <span class="text-danger">*</span></label>
-                                    <div class="col-lg-6">
-                                        <input type="password" class="form-control" id="val-config-ticket" name="config_ticket" value="{{ old('config_ticket') }}" placeholder="Nhập nội dung cấu hình vé">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-4 col-form-label" for="val-config-bill">Cấu hình hóa đơn <span class="text-danger">*</span></label>
-                                    <div class="col-lg-6">
-                                        <input type="password" class="form-control" id="val-config-bill" name="config_bill" value="{{ old('config_bill') }}" placeholder="Nhập nội dung cấu hình hóa đơn">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-4 col-form-label" for="val-latitude">Kinh độ<span class="text-danger">*</span></label>
-                                    <div class="col-lg-6">
-                                        <textarea class="form-control" id="val-latitude" name="latitude" value="{{ old('latitude') }}" rows="5" placeholder="Kinh độ"></textarea>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-4 col-form-label" for="val-longitude">Vĩ độ <span class="text-danger">*</span></label>
-                                    <div class="col-lg-6">
-                                        <input type="text" class="form-control" id="val-longitude" name="longitude" value="{{ old('longitude') }}" placeholder="Vĩ độ">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="val-status">Trạng thái <span class="text-danger">*</span></label>
                                     <div class="col-lg-6">
                                         <select class="form-control" id="val-status" name="status">
@@ -99,31 +75,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-5">
-                        <div class="foot-links">
-                            <h4> LIÊN KẾT </h4>
-                            <ul>
-                                <li><a href="../index.html">Trang chủ</a></li>
-                                <li><a href="http://www.hitechviet.com/" target="_blank">Hitech</a></li>
-                                <li><a href="#" target="_blank"></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="contact-info">
-                            <h4> LIÊN HỆ</h4>
-                            <ul>
-                                <li><i class="fa fa-phone-square"></i> Hotline: (84-4) 934 466 269</li>
-                                <li><i class="fa fa-envelope"></i> E-mail: <a class="mail-link" href="mailto:info@hitechviet.com">info@hitechviet.com</a></li>
-                            </ul>
-                        </div>
-                    </div>
+                     
                 </div>
             </div>
         </div>
         <div class="footer-foot">
             <div class="container-fluid">
-                <p>Bản quyền thuộc về Công ty Cổ Phần Hitech Việt Nam</p>
+                <p>  &copy;Bản quyền thuộc về Công ty Cổ Phần Pichiche Việt Nam</p>
             </div>
         </div>
     </footer>

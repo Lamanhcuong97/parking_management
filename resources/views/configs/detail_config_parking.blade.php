@@ -7,11 +7,11 @@
     <!-- Bread crumb -->
     <div class="row page-titles">
         <div class="col-md-5 align-self-center">
-            <h3 class="text-primary">Tìm kiếm xe</h3></div>
+            <h3 class="text-primary">Cấu hình bãi gửi xe</h3></div>
         <div class="col-md-7 align-self-center">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="javascript:void(0)">Trang chủ</a></li>
-                <li class="breadcrumb-item active">Tìm kiếm xe</li>
+                <li class="breadcrumb-item active">Chi tiết cấu hình bãi xe</li>
             </ol>
         </div>
     </div>
@@ -23,36 +23,27 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Thông tin</h4>
-                        <div class="tab-pane  p-20" id="detail" role="tabpanel">
-                            <div class="p-20">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h4 class="card-title">Thông tin chi tiết</h4>
-                                        <div class="row">
-                                            <div class="col-md-4 col-xs-4 b-r"><strong>Bãi gửi</strong>
-                                                <br>
-                                                <p class="text-muted">{{ $configParking->parking->Parking_Area_Name ?? '' }}</p>
-                                            </div>
-                                            <div class="col-md-4 col-xs-4 b-r"><strong>Bảo Vệ</strong>
-                                                <br>
-                                                <p class="text-muted">{{ $configParking->user->User_Name ?? '' }}</p>
-                                            </div>
-                                            <div class="col-md-4 col-xs-4 b-r"><strong>Địa chỉ</strong>
-                                                <br>
-                                                <p class="text-muted">{{ $configParking->MAC_Addr ?? '' }}</p>
-                                            </div>
-                                            <div class="col-md-4 col-xs-4 b-r"><strong>Thời gian tạo</strong>
-                                                <br>
-                                                <p class="text-muted">{{ $configParking->Reg_Date ?? '' }}</p>
-                                            </div>
-                                            <div class="col-md-4 col-xs-4 b-r"><strong>Thời gian cập nhật</strong>
-                                                <br>
-                                                <p class="text-muted">{{ $configParking->Mod_Date ?? '' }}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                        <h4 class="card-title">Thông tin chi tiết</h4>
+                        <div class="row">
+                            <div class="col-md-4 col-xs-4 b-r"><strong>Bãi gửi</strong>
+                                <br>
+                                <p class="text-muted">{{ $configParking->parking->Parking_Area_Name ?? '' }}</p>
+                            </div>
+                            <div class="col-md-4 col-xs-4 b-r"><strong>Bảo Vệ</strong>
+                                <br>
+                                <p class="text-muted">{{ $configParking->user->User_Name ?? '' }}</p>
+                            </div>
+                            <div class="col-md-4 col-xs-4 b-r"><strong>Địa chỉ thiết bị MAC</strong>
+                                <br>
+                                <p class="text-muted">{{ $configParking->MAC_Addr ?? '' }}</p>
+                            </div>
+                            <div class="col-md-4 col-xs-4 b-r"><strong>Thời gian tạo</strong>
+                                <br>
+                                <p class="text-muted">{{ $configParking->Reg_Date ?? '' }}</p>
+                            </div>
+                            <div class="col-md-4 col-xs-4 b-r"><strong>Thời gian cập nhật</strong>
+                                <br>
+                                <p class="text-muted">{{ $configParking->Mod_Date ?? '' }}</p>
                             </div>
                         </div>
                     </div>
@@ -76,33 +67,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-5">
-                        <div class="foot-links">
-                            <h4> LIÊN KẾT </h4>
-                            <ul>
-                                <li><a href="../index.html">Trang chủ</a></li>
-                                <li><a href="http://www.hitechviet.com/" target="_blank">Hitech</a></li>
-                                <li><a href="#" target="_blank"></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="contact-info">
-                            <h4> LIÊN HỆ</h4>
-                            <ul>
-                                <li><i class="fa fa-phone-square"></i> Hotline: (84-4) 934 466 269</li>
-                                <li><i class="fa fa-envelope"></i> E-mail: <a class="mail-link"
-                                                                                href="mailto:info@hitechviet.com">info@hitechviet.com</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                      
                 </div>
             </div>
         </div>
         <div class="footer-foot">
             <div class="container-fluid">
-                <p>Bản quyền thuộc về Công ty Cổ Phần Hitech Việt Nam</p>
+                <p>  &copy;Bản quyền thuộc về Công ty Cổ Phần Pichiche Việt Nam</p>
             </div>
         </div>
     </footer>

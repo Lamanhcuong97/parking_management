@@ -18,10 +18,10 @@ class InfoParkingController extends Controller
     public function index(Request $request)
     {
         $user = DB::table('user_mst')
-        ->select(DB::raw('user_mst.User_ID, User_Name, Password, Full_Name, set_parking_tbl.Role_ID, Role_Name, Phone, set_parking_tbl.Parking_Area_ID'))
+        ->select(DB::raw('user_mst.Delete_Flag, user_mst.User_ID, User_Name, Password, Full_Name, set_parking_tbl.Role_ID, Role_Name, Phone, set_parking_tbl.Parking_Area_ID' ))
         ->join('set_parking_tbl', 'user_mst.User_ID', 'set_parking_tbl.User_ID')
         ->join('role_mst', 'set_parking_tbl.Role_ID', 'role_mst.Role_ID' )
-        ->where('set_parking_tbl.MAC_Addr', $request->Mac_Addr ?? '90:06:28:D5:E4:E9')
+        ->where('set_parking_tbl.MAC_Addr', $request->Mac_Addr)
         ->where('set_parking_tbl.Delete_Flag', 0)
         ->where('user_mst.Delete_Flag', 0)
         ->get()->toArray();
@@ -53,7 +53,7 @@ class InfoParkingController extends Controller
         }
 
         $fee = DB::table('parking_fee')
-        ->select(DB::raw('Vehicle_ID, Type_Of_Fee, Fee_SEQ, Time_Block, Unit_Price, Max_Price, Free_First_Time, Over_Time'))
+        ->select(DB::raw('Vehicle_ID, Parking_Area_ID, Type_Of_Fee, Fee_SEQ, Time_Block, Unit_Price, Max_Price, Free_First_Time, Over_Time'))
         ->get()->toArray();
 
         $info = DB::table('parking_area_mst')
@@ -66,33 +66,39 @@ class InfoParkingController extends Controller
         ->groupBy('parking_fee.Type_Of_Fee')
         ->get()->toArray();
 
+        foreach( $user as &$row) {
+            $row->cls = 0;
+        }
+
+        $data['request'] = $request->Mac_Addr;
         $data['user'] = $user;
         $data['fee'] = $fee;
         $data['info'] = $info;
 
         return response()->json([
-            'data' => $data,
+            'data' => $data
           ]);
     }
 
     public function uploadImage(Request $request)
     {
-        $filenameWithExt = $request->file('avatar')->getClientOriginalName();
+        $filenameWithExt = $request->file('uploaded_file')->getClientOriginalName();
         //Get just filename
         $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
         // Get just ext
-        $extension = $request->file('avatar')->getClientOriginalExtension();
+        $extension = $request->file('uploaded_file')->getClientOriginalExtension();
         // Filename to store
         $fileNameToStore = $filename.'_'.time().'.'.$extension;
         // Upload Image
-        $path = $request->file('avatar')->storeAs('public/vehicles', $fileNameToStore);
+        $path = $request->file('uploaded_file')->storeAs('vehicles', $fileNameToStore);
     }
 
     public function addParking(Request $request)
     {
-        $parking = StatisticParking::where('Guard_ID', $request->Guard_ID)->first();
+        $parking = StatisticParking::where('Ticket_Code', $request->Ticket_Code)->first();
 
-        if(count($luot) > 0){
+
+        if(is_null($parking)){
             $parking = new StatisticParking();
             $parking->Guard_ID = $request->Guard_ID;
             $parking->Parking_Area_ID = $request->Parking_Area_ID;
@@ -123,14 +129,18 @@ class InfoParkingController extends Controller
                   ]);
             }
         }else{
-            $parking->Time_Out = $request->Time_Out;
-            $parking->Url_Picture = $request->Url_Picture;
-            $parking->Parking_Status = 1;
-            $parking->Cost_Parking = $request->Cost_Parking;
-            $parking->Mod_UID = $request->Guard_ID;
-            $parking->Mod_Date = $request->Time_Out;
-            $is_saved = $parking->save();
-            
+
+           $is_saved =  StatisticParking::where('Ticket_Code', $request->Ticket_Code)->update(
+                [
+                    'Time_Out' => $request->Time_Out,
+                    'Url_Picture' => $parking->Url_Picture.','.$request->Url_Picture,
+                    'Parking_Status' => 1,
+                    'Cost_Parking' =>  $request->Cost_Parking,
+                    'Mod_UID' =>  $request->Guard_ID,
+                    'Mod_Date' =>  $request->Time_Out,
+                ]
+            ); 
+
             if ($is_saved) {
                 return response()->json([
                     'success' => 1,
@@ -150,8 +160,8 @@ class InfoParkingController extends Controller
     {
         $log_log_in = new LogLogIn();
         $log_log_in->User_ID = $request->User_ID;
-        $log_log_in->Time_Log_In = $request->Time_Log_In;
-        $log_log_in->Time_Log_Out = $request->Time_Log_Out;
+        $log_log_in->Time_Log_In = $request->Date_Log_In .' '.$request->Time_Log_In;
+        $log_log_in->Time_Log_Out = $request->Date_Log_Out .' '.$request->Time_Log_Out;
         $log_log_in->Mac_Addr = $request->Mac_Addr;
         $log_log_in->Parking_Area_ID = $request->Parking_Area_ID;
         $is_saved = $log_log_in->save();

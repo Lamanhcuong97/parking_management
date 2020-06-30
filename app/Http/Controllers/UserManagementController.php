@@ -11,10 +11,14 @@ use Auth;
 use App\Http\Requests\UserRequest;
 use \Carbon\Carbon;
 Use Alert;
+use Session;
 
 
 class UserManagementController extends Controller
 {
+    public function __construct(){
+        parent::__construct();
+    }
     /**
      * Display a listing of the resource.
      *
@@ -24,10 +28,14 @@ class UserManagementController extends Controller
     {
         $search = $request->all();
         $companies = Company::all();
+        $user = Session::get('user');
+        $company_id = $user->Com_ID;
         $request->flash();
 
         if(!empty($search)){
-            $users = User::select("*");
+            $users = User::select("*")->whereHas('company', function ($query) use ($company_id) {
+                $query->where('Com_ID', $company_id);
+            });
 
             if( !is_null($request->user_name)){
                 $users = $users->Where('User_Name', $request->user_name);
@@ -44,7 +52,9 @@ class UserManagementController extends Controller
             $users = $users->with(['company', 'role'])->get();
 
         }else{
-            $users = User::with(['company', 'role'])->get();
+            $users = User::with(['company', 'role'])->whereHas('company', function ($query) use ($company_id) {
+                $query->where('Com_ID', $company_id);
+            })->get();
         }
 
         return view('users.list-user', ['users' => $users, 'companies' => $companies]);
@@ -78,12 +88,12 @@ class UserManagementController extends Controller
             'User_Name' => $request->user_name,
             'Full_Name' =>  $request->full_name,
             'Role_ID' =>  $request->role_id,
-            'Com_ID' =>  'CPM00000000000000001',
+            'Com_ID' =>  $user->Com_ID,
             'Delete_Flag' =>  0,
             'Phone' =>  $request->phone,
             'Mod_Date' =>  $date,
             'Reg_UID' =>  $user->User_ID,
-            'Mod_UID' =>   $user->User_IDd,
+            'Mod_UID' =>   $user->User_ID,
             'password' => md5($request->password),
         ]);
 
@@ -135,7 +145,7 @@ class UserManagementController extends Controller
         User::where('User_ID', $id)->update([
             'Full_Name' =>  $request->full_name,
             'Role_ID' =>  $request->role_id,
-            'Com_ID' =>  'CPM00000000000000001',
+            'Com_ID' =>  $user->Com_ID,
             'Delete_Flag' =>  0,
             'Phone' =>  $request->phone,
             'Mod_Date' =>  $date,

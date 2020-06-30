@@ -10,8 +10,13 @@ use App\LogLogIn;
 use App\Company;
 use App\StatisticParking;
 use App\VehicleType;
+use Session;
 class StatisticController extends Controller
 {
+    public function __construct(){
+        parent::__construct();
+    }
+    
     public function statisticVehicle(Request $request)
     {
         $request->flash();

@@ -25,12 +25,14 @@
                         <li><a href={{ route('parking-management.index') }}>Danh sách</a></li>
                     </ul>
                 </li>
+                @if(!is_null($user) && $user->Role_ID == 'RLM0000001')
                 <li> <a class="has-arrow  " href="#" aria-expanded="false"><i class="fa fa-building"></i><span class="hide-menu">Quản lý công ty</span></a>
                     <ul aria-expanded="false" class="collapse">
                         <li><a href={{ route('company-management.create') }}>Thêm mới</a></li>
                         <li><a href={{ route('company-management.index') }}>Danh sách</a></li>
                     </ul>
                 </li>
+                @endif
 
                 <li class="nav-label">Thống kê</li>
                 <li> <a href={{ route('statisticVehicle') }} aria-expanded="false"><i class="fa fa-file-text-o"></i><span class="hide-menu">Thống kê xe</span></a>

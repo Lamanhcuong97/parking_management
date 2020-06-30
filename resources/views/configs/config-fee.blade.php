@@ -120,7 +120,7 @@
                                                                     <th class="w-76">Phí gửi</th>
                                                                     <th class="w-73">Thời gian miễn phí</th>
                                                                     <th class="w-81">Quá giờ</th>
-                                                                    <th>Hành động</th>
+                                                                    <th class="w-98">Hành động</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
@@ -133,24 +133,18 @@
                                                                         <td>{{ $no++ }}</td>
                                                                         <td>{{ $parking_fee->parking->Parking_Area_Name ?? '' }}</td>
                                                                         <td>{{ $parking_fee->vehicle_type->Type_Vehicle_Name ?? '' }}</td>
-                                                                        <td>{{ $parking_fee->Type_Of_Fee }}</td>
+                                                                        <td>{{ $parking_fee->Type_Of_Fee == 1 ? 'Theo giờ' : 'Theo ca' }}</td>
                                                                         <td>{{ $parking_fee->Time_Block ?? '' }}</td>
-                                                                        <td>{{ $parking_fee->Unit_Price }}</td>
-                                                                        <td>{{ $parking_fee->Free_First_Time }}</td>
+                                                                        <td>{{ $parking_fee->Unit_Price ?? '' }}</td>
+                                                                        <td>{{ $parking_fee->Free_First_Time ?? ''}}</td>
                                                                         <td>
-                                                                            <span class="badge badge-danger">
-                                                                                Quá giờ
-                                                                            </span>
+                                                                            {{ $parking_fee->Over_Time ?? '' }}
                                                                         </td>
                                                                        <td class="table-action">
-                                                                            <a  data-toggle="detail" title="Chi tiết!"   href="{{ route('config.detailConfigFee', [$parking_fee->Parking_Fee_ID]) }}" class="btn btn-warning">
+                                                                            <a  data-toggle="detail" title="Chi tiết!"   href="{{ route('config.detailConfigFee', ['parking_id' => $parking_fee->parking->Parking_Area_ID, 
+                                                                            'vehicle_type' => $parking_fee->vehicle_type->Type_Vehicle_ID, 'fee_type' => $parking_fee->Type_Of_Fee]) }}" class="btn btn-warning">
                                                                                 <i class="fa fa-asterisk" aria-hidden="true"></i>
                                                                             </a>
-                                                                            <form action="#" method="POST">
-                                                                                {{method_field('DELETE')}}
-                                                                                @csrf
-                                                                                <button type="submit" class="btn btn-danger btn-del" data-toggle="delete" title="Xóa!" ><i class="fa fa-trash"></i></button>
-                                                                            </form>
                                                                         </td>
                                                                     </tr>
                                                                     @endforeach
@@ -239,7 +233,7 @@
                                             </div>
                                             
                                             <div class="form-group row">
-                                                <div class="col-lg-12 ml-auto">
+                                                <div class="col-lg-12 ml-auto ov-scroll">
                                                     <p class="btn btn-primary btn-add-row m-b-15">Thêm mới</p>
                                                     <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
                                                         <thead>
@@ -292,31 +286,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-5">
-                        <div class="foot-links">
-                            <h4> LIÊN KẾT </h4>
-                            <ul>
-                                <li><a href="../index.html">Trang chủ</a></li>
-                                <li><a href="http://www.hitechviet.com/" target="_blank">Hitech</a></li>
-                                <li><a href="#" target="_blank"></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="contact-info">
-                            <h4> LIÊN HỆ</h4>
-                            <ul>
-                                <li><i class="fa fa-phone-square"></i> Hotline: (84-4) 934 466 269</li>
-                                <li><i class="fa fa-envelope"></i> E-mail: <a class="mail-link" href="mailto:info@hitechviet.com">info@hitechviet.com</a></li>
-                            </ul>
-                        </div>
-                    </div>
+                     
                 </div>
             </div>
         </div>
         <div class="footer-foot">
             <div class="container-fluid">
-                <p>Bản quyền thuộc về Công ty Cổ Phần Hitech Việt Nam</p>
+                <p>  &copy;Bản quyền thuộc về Công ty Cổ Phần Pichiche Việt Nam</p>
             </div>
         </div>
     </footer>

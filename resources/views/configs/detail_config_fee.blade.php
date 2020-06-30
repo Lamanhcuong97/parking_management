@@ -7,11 +7,11 @@
     <!-- Bread crumb -->
     <div class="row page-titles">
         <div class="col-md-5 align-self-center">
-            <h3 class="text-primary">Tìm kiếm xe</h3></div>
+            <h3 class="text-primary">Chi tiết cấu phí</h3></div>
         <div class="col-md-7 align-self-center">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="javascript:void(0)">Trang chủ</a></li>
-                <li class="breadcrumb-item active">Tìm kiếm xe</li>
+                <li class="breadcrumb-item active">Chi tiết cấu hình phí</li>
             </ol>
         </div>
     </div>
@@ -23,74 +23,130 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">Thông tin</h4>
-                        <div class="tab-pane  p-20" id="detail" role="tabpanel">
-                            <div class="p-20">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h4 class="card-title">Thông tin chi tiết</h4>
-                                        <div class="row">
-                                            <div class="col-md-4 col-xs-4 b-r"><strong>Loại xe</strong>
-                                                <br>
-                                                <p class="text-muted">{{ $parkingFee->vehicle_type->Type_Vehicle_Name ?? '' }}</p>
-                                            </div>
-                                            <div class="col-md-4 col-xs-4 b-r"><strong>Thời gian tạo</strong>
-                                                <br>
-                                                <p class="text-muted">{{ $parkingFee->Reg_Date ?? '' }}</p>
-                                            </div>
-                                            <div class="col-md-4 col-xs-4 b-r"><strong>Thời gian
-                                                cập nhật</strong>
-                                                <br>
-                                                <p class="text-muted">{{ $parkingFee->Mod_Date ?? '' }}</p>
-                                            </div>
-                                            <div class="col-md-4 col-xs-4 b-r"><strong>Bãi gửi</strong>
-                                                <br>
-                                                <p class="text-muted">{{ $parkingFee->parking->Parking_Area_Name ?? '' }}</p>
-                                            </div>
-                                            <div class="col-md-4 col-xs-4 b-r"><strong>Phí gửi</strong>
-                                                <br>
-                                                <p class="text-muted">{{ number_format($parkingFee->Unit_Price, 0) . ' VNĐ' ?? '0' }}</p>
-                                            </div>
-                                            <div class="col-md-4 col-xs-4 b-r"><strong>Phí gửi cao nhất trong ngày</strong>
-                                                <br>
-                                                <p class="text-muted">{{ number_format($parkingFee->Max_Price, 0) . ' VNĐ' ?? '0' }}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="row">
-                                    <div class="col-8">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <h4 class="card-title">Ảnh xe vào</h4>
-                                                <div class="row">
-                                                    <div class="col-md-6 col-xs-6 b-r">
-                                                        <img style="width: 100%" src="../images/anh1.jpg">
-                                                    </div>
-                                                    <div class="col-md-6 col-xs-6 b-r">
-                                                        <img style="width: 100%" src="../images/anh2.jpg">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-4">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <h4 class="card-title">Ảnh xe ra</h4>
-                                                <div class="row">
-                                                    <div class="col-md-12 col-xs-12 b-r">
-                                                        <img style="width: 100%" src="../images/anh3.jpg">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                        <h4 class="card-title">Thông tin chi tiết</h4>
+                        <form class="form-valide" action="{{ route('config.setConfigFee') }}" method="post">
+                            @csrf
+                            <div class="form-group row">
+                                <label class="col-lg-4 col-form-label" for="val-parking-dan">Chọn bãi gửi <span class="text-danger">*</span></label>
+                                <div class="col-lg-6">
+                                    <select class="form-control" id="val-parking-dan" name="parking_id" >
+                                        <option value="0">Chọn bãi gửi</option> 
+                                        @if(count($parkings) != 0)
+                                            @foreach($parkings as $parking)
+                                                <option 
+                                                    value="{{ $parking->Parking_Area_ID }}"
+                                                    {{ old('parking_id', $detail_fees[0]['Parking_Area_ID']) == $parking->Parking_Area_ID ? 'selected' : '' }}
+                                                >
+                                                    {{ $parking->Parking_Area_Name }}
+                                                </option>
+                                            @endforeach
+                                        @endif
+                                    </select>
                                 </div>
                             </div>
-                        </div>
+                            <div class="form-group row">
+                                <label class="col-lg-4 col-form-label" for="val-type-vehicle-dan">Chọn loại xe <span class="text-danger">*</span></label>
+                                <div class="col-lg-6">
+                                    <select class="form-control" id="val-type-vehicle-dan" name="type_vehicle">
+                                        <option value="0">Chọn loại xe</option>
+                                        @if(count($vehicle_types) != 0)
+                                            @foreach($vehicle_types as $vehicle_type)
+                                                <option 
+                                                    value="{{ $vehicle_type->Type_Vehicle_ID }}"
+                                                    {{ old('vehicle_type', $detail_fees[0]['Vehicle_ID']) == $vehicle_type->Type_Vehicle_ID ? 'selected' : '' }}
+                                                >
+                                                    {{ $vehicle_type->Type_Vehicle_Name }}
+                                                </option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-4 col-form-label" for="val-status">Chọn loại phí <span class="text-danger">*</span></label>
+                                <div class="col-lg-6">
+                                    <select class="form-control" id="val-status-dan" name="type_fee">
+                                        <option value="" selected disabled>Chọn loại phí </option>
+                                        <option value="0" {{ old('type_fee', $detail_fees[0]['Type_Of_Fee']) == 0 ? 'selected' : '' }}>Tính phí theo Block</option>
+                                        <option value="1" {{ old('type_fee', $detail_fees[0]['Type_Of_Fee']) == 1 ? 'selected' : '' }}>Tính phí theo ca</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-4 col-form-label" for="val-max-price-dan">Số tiền tối đa qua 24h (vnd)<span class="text-danger">*</span></label>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" id="val-max-price-dan" name="max_price" value='{{ old('max_price', $detail_fees[0]['Max_Price']) }}' placeholder="Nhập số tiền tối đa khi qua 24h"/>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-4 col-form-label" for="val-free-first-time-dan">Thời gian miễn phí ban đầu (phút)<span class="text-danger">*</span></label>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" id="val-free-first-time-dan" name="free_first_time" value='{{ old('free_first_time', $detail_fees[0]['Free_First_Time']) }}'  placeholder="Nhập thời gian miễn phí ban đầu"/>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-lg-4 col-form-label" for="val-over-time-dan">Thời gian miễn phí khi quá giờ (phút)<span class="text-danger">*</span></label>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" id="val-over-time-dan" name="over_time" value='{{ old('over_time', $detail_fees[0]['Over_Time']) }}'  placeholder="Nhập thời gian miễn phí khi quá mỗi giờ"/>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group row">
+                                <div class="col-lg-12 ml-auto ov-scroll">
+                                    <p class="btn btn-primary btn-add-row m-b-15">Thêm mới</p>
+                                    <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>STT</th>
+                                                <th class="w-79">Thứ tự</th>
+                                                <th class="w-74">Thời gian Block</th>
+                                                <th class="w-74">Giá tiền</th>
+                                                <th class="w-73">Trạng thái</th>
+                                                <th class="w-112">Hành động</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="block_fee">
+                                        @if(count($detail_fees) != 0)
+                                        @php 
+                                            $no = 1;
+                                        @endphp
+                                        @foreach($detail_fees as $detail_fee)
+                                            <tr>
+                                                <td>{{ $no++ }}</td>
+                                                <td>
+                                                    <input type="number" class="form-control" id="fee_seqs" name="fee_seqs[]" value='{{ $detail_fee['Fee_SEQ'] }}'></input>
+                                                </td>
+                                                <td>
+                                                    <input type="number" class="form-control" id="time_blocks" name="time_blocks[]" value='{{ $detail_fee['Time_Block'] }}'></input>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" id="unit_prices" name="unit_prices[]" value='{{ $detail_fee['Unit_Price'] }}'></input>
+                                                </td>
+                                                <td>
+                                                    <select class="form-control" id="val-status-dan" name="status[]">
+                                                        <option value="" selected disabled>Chọn trạng thái</option>
+                                                        <option value="0" {{ $detail_fee['Delete_Flag'] == 0 ? 'selected' : '' }}>Hoạt động</option>
+                                                        <option value="1" {{ $detail_fee['Delete_Flag'] == 1 ? 'selected' : '' }}>Đã hủy</option>
+                                                    </select>
+                                                </td>
+                                                <td>    
+
+                                                </td>
+                                                
+                                            </tr>
+                                        @endforeach
+                                        @endif
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group row">
+                                <div class="col-lg-8 ml-auto">
+                                    <button type="submit" class="btn btn-primary">Cập nhật</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -112,33 +168,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-5">
-                        <div class="foot-links">
-                            <h4> LIÊN KẾT </h4>
-                            <ul>
-                                <li><a href="../index.html">Trang chủ</a></li>
-                                <li><a href="http://www.hitechviet.com/" target="_blank">Hitech</a></li>
-                                <li><a href="#" target="_blank"></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="contact-info">
-                            <h4> LIÊN HỆ</h4>
-                            <ul>
-                                <li><i class="fa fa-phone-square"></i> Hotline: (84-4) 934 466 269</li>
-                                <li><i class="fa fa-envelope"></i> E-mail: <a class="mail-link"
-                                                                                href="mailto:info@hitechviet.com">info@hitechviet.com</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                      
                 </div>
             </div>
         </div>
         <div class="footer-foot">
             <div class="container-fluid">
-                <p>Bản quyền thuộc về Công ty Cổ Phần Hitech Việt Nam</p>
+                <p>  &copy;Bản quyền thuộc về Công ty Cổ Phần Pichiche Việt Nam</p>
             </div>
         </div>
     </footer>
@@ -147,19 +183,85 @@
 @endsection
 
 @section('script')
+<script>
+    $(document).ready(function() {
+        var no = {{ count($detail_fees) + 1 }};
 
-<script src={{ asset("/js/lib/morris-chart/raphael-min.js") }}></script>
-<script src={{ asset("/js/lib/morris-chart/morris.js") }}></script>
-<script src={{ asset("/js/chart-init/statistic-revenue.js") }}></script>
+      $('[data-toggle="detail"]').tooltip(); 
+      $('[data-toggle="delete"]').tooltip(); 
+
+        $('.btn-add-row').on('click', function(){
+            $('#block_fee').append(
+                `<tr>
+                    <td>${ no++ }</td>
+                    <td>
+                        <input type="number" class="form-control" id="fee_seqs" name="fee_seqs[]"></input>
+                    </td>
+                    <td>
+                        <input type="number" class="form-control" id="time_blocks" name="time_blocks[]"></input>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" id="unit_prices" name="unit_prices[]"></input>
+                    </td>
+                    <td>
+                        <select class="form-control" id="val-status-dan" name="status[]">
+                            <option value="" selected disabled>Chọn trạng thái</option>
+                            <option value="0" selected>Hoạt động</option>
+                            <option value="1">Đã hủy</option>
+                        </select>
+                    </td>
+                    <td>    
+                        <p class="btn btn-danger btn-delete">X</p>
+
+                    </td>
+                    
+                </tr>`);
+        });
+
+        $(document).on('click', '.btn-delete', function(){
+            $(this).parents('tr').remove()
+        })
+
+        let max_price = $('#val-max-price-dan').val();
+        $('#val-max-price-dan').val(convertNumberToCurrency(max_price));
+
+        $('#val-max-price-dan').keyup(function(){
+            let value = $(this).val().toString().replace(/,/g, '');
+
+            $(this).val(convertNumberToCurrency(value));
+        });
+
+        $(document).on('keyup', '#unit_prices', function(){
+            let value = $(this).val().toString().replace(/,/g, '');
+
+            $(this).val(convertNumberToCurrency(value));
+        });
 
 
-<script src={{ asset("/js/lib/datatables/datatables.min.js") }}></script>
-<script src={{ asset("/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js") }}></script>
-<script src={{ asset("/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.flash.min.js") }}></script>
-<script src={{ asset("/js/lib/datatables/cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js") }}></script>
-<script src={{ asset("/js/lib/datatables/cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js") }}></script>
-<script src={{ asset("/js/lib/datatables/cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js") }}></script>
-<script src={{ asset("/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js") }}></script>
-<script src={{ asset("/js/lib/datatables/cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js") }}></script>
-<script src={{ asset("/js/lib/datatables/datatables-init.js") }}></script>
+        
+      $('.btn-del').click(function (e) {
+            e.preventDefault();
+
+            var $form = $(this).closest('form');
+            
+            swal({
+                title: "Bạn có muốn?",
+                text: "Xóa dữ liệu không?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Có", 
+                cancelButtonText: "Không", 
+                closeOnConfirm: false
+            }, function (isConfirmed) {
+                if (isConfirmed) {
+                    $form.submit();
+                }
+            });
+
+            return false;
+        });  
+        
+    });
+</script>
 @endsection

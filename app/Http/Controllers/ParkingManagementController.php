@@ -7,10 +7,14 @@ use App\Company;
 use App\Parking;
 use Auth;
 use \Carbon\Carbon;
+use Session;
 
 
 class ParkingManagementController extends Controller
 {
+    public function __construct(){
+        parent::__construct();
+    }
     /**
      * Display a listing of the resource.
      *
@@ -68,7 +72,7 @@ class ParkingManagementController extends Controller
         $parking->Parking_Area_Name = $request->parking_area_name;
         $parking->Delete_Flag = $request->status;
         $parking->Mod_Date = $date;
-        $parking->Com_ID = 'CPM00000000000000001';
+        $parking->Com_ID = $user->Com_ID;
         $parking->Mod_UID = '';
         $parking->Reg_UID =  $user->User_ID;
         $parking->save();

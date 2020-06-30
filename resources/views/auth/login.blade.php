@@ -12,7 +12,7 @@
                         @csrf
                             <div class="form-group">
                                 <label>Tên đăng nhập</label>
-                                <input id="user_id" type="text" class="form-control @error('User_Name') is-invalid @enderror" name="User_Name" value="{{ old('User_Name', 'dattt97') }}" required autocomplete="email" autofocus>
+                                <input id="user_id" type="text" class="form-control @error('User_Name') is-invalid @enderror" name="User_Name" value="{{ old('User_Name', 'dattt97') }}"  autofocus>
 
                                 @error('User_Name')
                                     <span class="invalid-feedback" role="alert">

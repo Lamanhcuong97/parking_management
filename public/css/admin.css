@@ -798,3 +798,7 @@
   margin: 0 5px;
 }
 
+.ov-scroll {
+  overflow-y: scroll;
+}
+

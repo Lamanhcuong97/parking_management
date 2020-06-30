@@ -15,10 +15,18 @@ use \Carbon\Carbon;
 
 class ConfigManagementController extends Controller
 {
+    public function __construct(){
+        parent::__construct();
+     }
+
     public function configFee(Request $request)
     {
         $vehicle_types = VehicleType::all();
-        $parkings = Parking::all();
+        $user = Session::get('user');
+        $company_id = $user->Com_ID;
+        $parkings = Parking::whereHas('company', function ($query) use ($company_id) {
+            $query->where('Com_ID', $company_id);
+        })->get();
 
         $search = $request->all();
         $request->flash();
@@ -36,18 +44,27 @@ class ConfigManagementController extends Controller
             }
 
             $parking_fees =  $parking_fees->with(['parking', 'vehicle_type'])->get();
+           
         }else{
             $parking_fees = ParkingFee::with(['parking', 'vehicle_type'])->get();
         }
+
+        
         
         return view('configs.config-fee', ['parking_fees' => $parking_fees, 'vehicle_types' => $vehicle_types , 'parkings' => $parkings]);
     }
 
     public function  configParking(Request $request)
     {
-        $parkings = Parking::all();
+        $user = Session::get('user');
+        $company_id = $user->Com_ID;
+        $parkings = Parking::whereHas('company', function ($query) use ($company_id) {
+            $query->where('Com_ID', $company_id);
+        })->get();
         $roles = Role::all();
-        $users = User::all();
+        $users = User::whereHas('company', function ($query) use ($company_id) {
+            $query->where('Com_ID', $company_id);
+        })->get();
 
         $search = $request->all();
         $request->flash();
@@ -138,11 +155,22 @@ class ConfigManagementController extends Controller
         return view('configs.detail_config_parking', ['configParking' => $configParking]);
     }
 
-    public function detailConfigFee($id)
+    public function detailConfigFee(Request $request)
     {
-        $parkingFee = ParkingFee::with('vehicle_type', 'parking')->where('Parking_Fee_ID', $id)->first();
+        $vehicle_types = VehicleType::all();
+        $user = Session::get('user');
+        $company_id = $user->Com_ID;
+        $parkings = Parking::whereHas('company', function ($query) use ($company_id) {
+            $query->where('Com_ID', $company_id);
+        })->get();
 
-        return view('configs.detail_config_fee', ['parkingFee' => $parkingFee]);
+        $detail_fees = ParkingFee::select("*")
+        ->Where('Parking_Area_ID', $request->parking_id)
+        ->Where('Vehicle_ID', $request->vehicle_type)
+        ->Where('Type_Of_Fee', $request->fee_type)
+        ->with(['parking', 'vehicle_type'])->get()->toArray();
+
+        return view('configs.detail_config_fee', ['vehicle_types' => $vehicle_types , 'parkings' => $parkings, 'detail_fees' => $detail_fees]);
     }
 
     public function destroyConfigParking($id)

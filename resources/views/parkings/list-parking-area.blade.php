@@ -33,6 +33,7 @@
                                         <input type="text" class="form-control" name="parking_name" value='{{ old('parking_name')}}'placeholder="Nhập vào tên bãi">
                                     </div>
                                 </div>
+                                @if(!is_null($user) && $user->Role_ID == 'RLM0000001')
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="control-label">Tên công ty</label>
@@ -47,6 +48,7 @@
                                         </select>
                                     </div>
                                 </div>
+                                @endif
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-warning btn-rounded m-b-10 m-l-5">
@@ -84,15 +86,6 @@
                                     <th>Hành động</th>
                                 </tr>
                                 </thead>
-                                <tfoot>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Tên Bãi</th>
-                                    <th>Công ty</th>
-                                    <th>Trạng thái</th>
-                                    <th>Hành động</th>
-                                </tr>
-                                </tfoot>
                                 <tbody>
                                     @if(count($parkings) != 0)
                                         @php
@@ -145,31 +138,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-5">
-                        <div class="foot-links">
-                            <h4> LIÊN KẾT </h4>
-                            <ul>
-                                <li><a href="../index.html">Trang chủ</a></li>
-                                <li><a href="http://www.hitechviet.com/" target="_blank">Hitech</a></li>
-                                <li><a href="#" target="_blank"></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="contact-info">
-                            <h4> LIÊN HỆ</h4>
-                            <ul>
-                                <li><i class="fa fa-phone-square"></i> Hotline: (84-4) 934 466 269</li>
-                                <li><i class="fa fa-envelope"></i> E-mail: <a class="mail-link" href="mailto:info@hitechviet.com">info@hitechviet.com</a></li>
-                            </ul>
-                        </div>
-                    </div>
+                     
                 </div>
             </div>
         </div>
         <div class="footer-foot">
             <div class="container-fluid">
-                <p>Bản quyền thuộc về Công ty Cổ Phần Hitech Việt Nam</p>
+                <p>  &copy;Bản quyền thuộc về Công ty Cổ Phần Pichiche Việt Nam</p>
             </div>
         </div>
     </footer>

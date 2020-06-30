@@ -61,6 +61,7 @@ class LoginController extends Controller
     }
 
     function login(Request $request){
+        $request->flash();
 
         $validatorRules = array(
             'User_Name' => 'required', 
@@ -73,6 +74,11 @@ class LoginController extends Controller
 
        
         if(isset($user)) {
+
+            if($user->Role_ID == 'RLM0000005') { // If their password is still MD5
+                $validator->messages()->add('User_Name', 'Người dùng không có quyền truy cập hệ thống.');
+                return redirect('/login')->withErrors($validator->errors());
+            }
 
             if($user->Password == md5($request->password)) { // If their password is still MD5
                 Session::put('user', $user);

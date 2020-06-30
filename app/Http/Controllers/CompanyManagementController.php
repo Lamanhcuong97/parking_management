@@ -6,10 +6,14 @@ use Illuminate\Http\Request;
 use App\Company;
 use Auth;
 use \Carbon\Carbon;
+use Session;
 
 
 class CompanyManagementController extends Controller
 {
+    public function __construct(){
+        parent::__construct();
+     }
     /**
      * Display a listing of the resource.
      *
