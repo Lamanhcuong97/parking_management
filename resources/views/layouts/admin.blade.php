@@ -11,7 +11,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Hitech') }} - @yield('title')</title>
+    <title>{{ config('app.name', 'Pichiche') }} - @yield('title')</title>
 
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href={{ asset("/images/favicon.png") }}>
@@ -43,7 +43,7 @@
     <svg class="circular" viewBox="25 25 50 50">
         <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" /> </svg>
 </div>
-@include('sweetalert::alert')
+
 <!-- Main wrapper  -->
 <div id="main-wrapper">
     <!-- header header  -->
