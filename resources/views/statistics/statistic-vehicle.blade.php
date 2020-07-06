@@ -106,8 +106,10 @@
                                     @endphp
                                         @foreach($data as $item)
                                         <tr>
-                                            <td rowspan="5">{{ $i++ }}</td>
-                                            <td rowspan="5">{{ $item->Parking_Area_Name ?? '' }}</td>
+                                            <tr>
+                                                <td rowspan="5">{{ $i++ }}</td>
+                                                <td rowspan="5">{{ $item->Parking_Area_Name ?? '' }}</td>
+                                            </tr>
                                             @foreach($item->statistics as $statistic)
                                             <tr>
                                                 <td>{{ $statistic->Type_Vehicle_Name ?? '' }}</td>
@@ -121,6 +123,7 @@
                                                 <td>100</td>
                                             </tr>
                                         </tr>
+                                           
                                         @endforeach
                                     @endif
 

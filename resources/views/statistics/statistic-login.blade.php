@@ -152,11 +152,14 @@
                                             <tr>
                                                 <td>{{ $i++ }}</td>
                                                 <td>{{ $log_login->user->User_Name ?? '' }}</td>
-                                                <td>{{ $log_login->MAC_Addr ?? '' }}</td>
-                                                <td>{{ $log_login->parking->Parking_Area }}</td>
-                                                <td>{{ $log_login->Time_In }}</td>
-                                                <td>{{ $log_login->Time_Out }}</td>
-                                                <td><span class="badge badge-success">Đang hoạt động</span></td>
+                                                <td>{{ $log_login->Mac_Addr ?? '' }}</td>
+                                                <td>{{ $log_login->parking->Parking_Area_Name }}</td>
+                                                <td>{{ $log_login->Time_Log_In }}</td>
+                                                <td>{{ $log_login->Time_Log_Out }}</td>
+                                                <td><span class="badge {{ $time_now > $log_login->Time_Log_Out ? 'badge-danger' : 'badge-success' }}">
+                                                    {{ $time_now > $log_login->Time_Log_Out ? 'Đã đăng xuất' : 'Đang hoạt động' }}
+                                                </span>
+                                                </td>
                                             </tr>
                                         @endforeach
                                     @endif

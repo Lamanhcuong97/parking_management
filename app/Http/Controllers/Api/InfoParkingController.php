@@ -88,7 +88,7 @@ class InfoParkingController extends Controller
         // Get just ext
         $extension = $request->file('uploaded_file')->getClientOriginalExtension();
         // Filename to store
-        $fileNameToStore = $filename.'_'.time().'.'.$extension;
+        $fileNameToStore = $filename.'.'.$extension;
         // Upload Image
         $path = $request->file('uploaded_file')->storeAs('vehicles', $fileNameToStore);
     }
@@ -133,7 +133,7 @@ class InfoParkingController extends Controller
            $is_saved =  StatisticParking::where('Ticket_Code', $request->Ticket_Code)->update(
                 [
                     'Time_Out' => $request->Time_Out,
-                    'Url_Picture' => $parking->Url_Picture.','.$request->Url_Picture,
+                    'Url_Picture' => $request->Url_Picture,
                     'Parking_Status' => 1,
                     'Cost_Parking' =>  $request->Cost_Parking,
                     'Mod_UID' =>  $request->Guard_ID,

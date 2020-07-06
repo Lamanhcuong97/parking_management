@@ -126,6 +126,58 @@ class ConfigManagementController extends Controller
         return redirect()->route('config.configFee');
     }
 
+    public function updateConfigFee(Request $request)
+    {
+        $date = Carbon::now();
+        $date = $date->toDateTimeString();  
+        $user = Session::get('user');
+
+        $length = count($request->fee_seqs);
+        $length_update = count($request->fee_ids);
+        if($length > 0){
+            for ($i=0 ; $i < $length_update ; $i++) {
+                ParkingFee::where('Parking_Fee_ID', $request->fee_ids[$i])
+                ->update([
+                    'Fee_SEQ' => $request->fee_seqs[$i], 
+                    'Time_Block' => $request->time_blocks[$i], 
+                    'Unit_Price' => str_replace(',', '', $request->unit_prices[$i]), 
+                    'Max_Price' => str_replace(',', '', $request->max_price), 
+                    'Free_First_Time' => $request->free_first_time, 
+                    'Over_Time' => $request->over_time, 
+                    'Delete_Flag' => $request->status[$i], 
+                    'Mod_Date' => $date,
+                    'Mod_UID' => $user->User_ID, 
+                    
+                ]);
+            }
+
+            if($length > $length_update){
+                for ($j= $length_update ; $j < $length ; $j++) {
+                    ParkingFee::create([
+                        'Parking_Area_ID' => $request->parking_id, 
+                        'Vehicle_ID' => $request->type_vehicle, 
+                        'Type_Of_Fee' => $request->type_fee, 
+                        'Fee_SEQ' => $request->fee_seqs[$j], 
+                        'Time_Block' => $request->time_blocks[$j], 
+                        'Unit_Price' => str_replace(',', '', $request->unit_prices[$j]), 
+                        'Max_Price' => str_replace(',', '', $request->max_price), 
+                        'Free_First_Time' => $request->free_first_time, 
+                        'Over_Time' => $request->over_time, 
+                        'Delete_Flag' => $request->status[$j], 
+                        'Reg_UID' => $user->User_ID, 
+                        'Reg_Date' => $date, 
+                        'Mod_Date' => $date,
+                        'Mod_UID' => $user->User_ID, 
+                        
+                    ]);
+                }
+            }
+        }
+        toastr()->success('Dữ liệu được cập nhật thành công!');
+        
+        return redirect()->route('config.configFee');
+    }
+
     public function setConfigParking(Request $request)
     {
         $date = Carbon::now();
@@ -148,11 +200,52 @@ class ConfigManagementController extends Controller
         return redirect()->route('config.configParking');
     }
 
+    public function updateConfigParking(Request $request, $id)
+    {
+        $date = Carbon::now();
+        $date = $date->toDateTimeString();  
+        $user = Session::get('user');
+
+        $check = ConfigParking::where('Set_Parking_ID', $id)
+            ->update([
+            'Parking_Area_ID' => $request->parking_id, 
+            'User_ID' => $request->user_id, 
+            'Role_ID' => $request->role_id, 
+            'MAC_Addr' => $request->mac_addr, 
+            'Delete_Flag' => $request->status, 
+            'Mod_Date' => $date,
+            'Mod_UID' => $user->User_ID, 
+            
+        ]);
+        if($check){
+            toastr()->success('Dữ liệu được lưu thành công!');
+        }else{
+            toastr()->error('Có lỗi xảy ra!');
+        }
+
+        return redirect()->route('config.configParking');
+    }
+
     public function detailConfigParking($id)
     {
+        $user = Session::get('user');
+        $company_id = $user->Com_ID;
+        $parkings = Parking::whereHas('company', function ($query) use ($company_id) {
+            $query->where('Com_ID', $company_id);
+        })->get();
+        $roles = Role::all();
+        $users = User::whereHas('company', function ($query) use ($company_id) {
+            $query->where('Com_ID', $company_id);
+        })->get();
         $configParking = ConfigParking::with(['parking', 'user'])->where('Set_Parking_ID', $id)->first();
 
-        return view('configs.detail_config_parking', ['configParking' => $configParking]);
+        return view('configs.detail_config_parking', 
+        [
+            'configParking' => $configParking,
+            'parkings' => $parkings,
+            'roles' => $roles,
+            'users' => $users
+            ]);
     }
 
     public function detailConfigFee(Request $request)
@@ -169,6 +262,7 @@ class ConfigManagementController extends Controller
         ->Where('Vehicle_ID', $request->vehicle_type)
         ->Where('Type_Of_Fee', $request->fee_type)
         ->with(['parking', 'vehicle_type'])->get()->toArray();
+
 
         return view('configs.detail_config_fee', ['vehicle_types' => $vehicle_types , 'parkings' => $parkings, 'detail_fees' => $detail_fees]);
     }

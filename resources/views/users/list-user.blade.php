@@ -99,24 +99,24 @@
                                     @php
                                         $no = 1;
                                     @endphp
-                                    @foreach($users as $user)
+                                    @foreach($users as $row)
                                         <tr>
                                             <td>{{ $no++ }}</td>
-                                            <td>{{ $user->User_Name ?? '' }}</td>
-                                            <td>{{ $user->Full_Name ?? '' }}</td>
-                                            <td>{{ $user->Phone ?? '' }}</td>
-                                            <td>{{ $user->role->Role_Name ?? '' }}</td>
-                                            <td>{{ $user->company->Com_Name ?? '' }}</td>
+                                            <td>{{ $row->row_Name ?? '' }}</td>
+                                            <td>{{ $row->Full_Name ?? '' }}</td>
+                                            <td>{{ $row->Phone ?? '' }}</td>
+                                            <td>{{ $row->role->Role_Name ?? '' }}</td>
+                                            <td>{{ $row->company->Com_Name ?? '' }}</td>
                                             <td>
-                                                <span class="badge {{ $user->Delete_Flag == 0 ? 'badge-success' : 'badge-danger' }}">
-                                                    {{ $user->Delete_Flag == 0 ? 'Hoạt động' : 'Ngừng hoạt động' }}
+                                                <span class="badge {{ $row->Delete_Flag == 0 ? 'badge-success' : 'badge-danger' }}">
+                                                    {{ $row->Delete_Flag == 0 ? 'Hoạt động' : 'Ngừng hoạt động' }}
                                                 </span>
                                             </td>
                                             <td class="table-action">
-                                                <a type="submit" data-toggle="detail" title="Chi tiết!"   href={{ route('user-management.show', [$user->User_ID]) }} class="btn btn-warning">
+                                                <a type="submit" data-toggle="detail" title="Chi tiết!"   href={{ route('user-management.show', [$row->User_ID]) }} class="btn btn-warning">
                                                     <i class="fa fa-asterisk" aria-hidden="true"></i>
                                                 </a>
-                                                <form action="{{ route('user-management.destroy', [$user->User_ID])}}" method="POST">
+                                                <form action="{{ route('user-management.destroy', [$row->User_ID])}}" method="POST">
                                                     {{method_field('DELETE')}}
                                                     @csrf
                                                     <button type="submit" class="btn btn-danger btn-del" data-toggle="delete" title="Xóa!" ><i class="fa fa-trash"></i></button>

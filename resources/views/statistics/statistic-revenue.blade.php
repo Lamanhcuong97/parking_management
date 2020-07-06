@@ -106,11 +106,13 @@
                                     $i = 1;
                                     @endphp
                                         @foreach($data as $item)
-                                            
-                                            @foreach($item->statistics as $statistic)
+                                        <tr>
                                             <tr>
                                                 <td rowspan="5">{{ $i++ }}</td>
                                                 <td rowspan="5">{{ $item->Parking_Area_Name ?? ''}}</td>
+                                            </tr>
+                                            @foreach($item->statistics as $statistic)
+                                            <tr>
                                                 <td>{{ $statistic->Type_Vehicle_Name ?? ''}}</td>
                                                 <td>{{ number_format($statistic->revenue, 0) . ' VNĐ' ?? '0' }}</td>
                                                 <td>{{ round(($statistic->revenue/ $item->revenue)*100, 3) }}</td>
@@ -121,6 +123,7 @@
                                                 <td>{{ number_format($item->revenue, 0) . ' VNĐ'  ?? '0' }}</td>
                                                 <td>100</td>
                                             </tr>
+                                        </tr>   
                                         @endforeach
                                     @endif
                                 </tbody>

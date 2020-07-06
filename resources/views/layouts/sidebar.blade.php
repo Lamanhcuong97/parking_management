@@ -26,7 +26,7 @@
                     </ul>
                 </li>
                 @if(!is_null($user) && $user->Role_ID == 'RLM0000001')
-                <li> <a class="has-arrow  " href="#" aria-expanded="false"><i class="fa fa-building"></i><span class="hide-menu">Quản lý công ty</span></a>
+                <li> <a class="has-arrow  " href="#" aria-expanded="false"><i class="fa fa-building"></i><span class="hide-menu">Quản lý công ty </span></a>
                     <ul aria-expanded="false" class="collapse">
                         <li><a href={{ route('company-management.create') }}>Thêm mới</a></li>
                         <li><a href={{ route('company-management.index') }}>Danh sách</a></li>

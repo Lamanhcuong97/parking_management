@@ -88,12 +88,12 @@
                                                                     <select class="form-control" id="val-user" name="search_user_id">
                                                                         <option value="0" selected disabled>Chọn nhân viên</option>
                                                                         @if(count($users) != 0)
-                                                                            @foreach($users as $user)
+                                                                            @foreach($users as $row)
                                                                                 <option 
-                                                                                    value="{{ $user->User_ID }}"
-                                                                                    {{ old('search_user_id') == $user->User_ID ? 'selected' : '' }}
+                                                                                    value="{{ $row->User_ID }}"
+                                                                                    {{ old('search_user_id') == $row->User_ID ? 'selected' : '' }}
                                                                                 >
-                                                                                    {{ $user->User_Name }}
+                                                                                    {{ $row->User_Name }}
                                                                                 </option>
                                                                             @endforeach
                                                                         @endif
@@ -204,13 +204,13 @@
                                                     <select class="form-control" id="val-user" name="user_id">
                                                         <option value="0" selected disabled>Chọn nhân viên</option>
                                                         @if(count($users) != 0)
-                                                            @foreach($users as $user)
+                                                            @foreach($users as $row)
                                                                 <option 
-                                                                    value="{{ $user->User_ID }}"
-                                                                    data_role_id="{{ $user->role->Role_ID }}"
-                                                                    {{ old('user_id') == $user->User_ID ? 'selected' : '' }}
+                                                                    value="{{ $row->User_ID }}"
+                                                                    data_role_id="{{ $row->role->Role_ID }}"
+                                                                    {{ old('user_id') == $row->User_ID ? 'selected' : '' }}
                                                                 >
-                                                                    {{ $user->User_Name }}
+                                                                    {{ $row->User_Name }}
                                                                 </option>
                                                             @endforeach
                                                         @endif

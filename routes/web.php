@@ -25,7 +25,9 @@ Route::middleware(['checkLogin'])->group(function () {
     Route::get('/config-parking', 'ConfigManagementController@configParking')->name('config.configParking');
     Route::get('/config-fee', 'ConfigManagementController@configFee')->name('config.configFee');
     Route::post('/config-fee', 'ConfigManagementController@setConfigFee')->name('config.setConfigFee');
+    Route::post('/update-config-fee', 'ConfigManagementController@updateConfigFee')->name('config.updateConfigFee');
     Route::post('/config-parking', 'ConfigManagementController@setConfigParking')->name('config.setConfigParking');
+    Route::post('/config-parking/{id}', 'ConfigManagementController@updateConfigParking')->name('config.updateConfigParking');
     Route::get('/config-parking/{id}', 'ConfigManagementController@detailConfigParking')->name('config.detailConfigParking');
     Route::get('/detail-config-fee', 'ConfigManagementController@detailConfigFee')->name('config.detailConfigFee');
     Route::delete('/config-parking/{id}', 'ConfigManagementController@destroyConfigParking')->name('config.destroyConfigParking');

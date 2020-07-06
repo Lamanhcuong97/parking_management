@@ -78,7 +78,7 @@
 
                     <!-- Profile -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-muted" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="../images/users/avatar_profile.png" alt="user" class="profile-pic" /></a>
+                        <a class="nav-link dropdown-toggle text-muted" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ $user->User_Name ?? '' }} <img src="{{ asset("/images/users/avatar_profile.png") }} " alt="user" class="profile-pic" /></a>
                         <div class="dropdown-menu dropdown-menu-right animated zoomIn">
                             <ul class="dropdown-user">
                                 <li><a href={{ asset("profile") }}><i class="ti-user"></i> Thông tin cá nhân</a></li>

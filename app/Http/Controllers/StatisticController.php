@@ -63,6 +63,7 @@ class StatisticController extends Controller
             $data[$i]->statistics = $statistics;
             $i++;
         }
+       
 
         return view('statistics.statistic-vehicle', ['data' => $data, 'companies' => $companies]);
     }
@@ -73,6 +74,8 @@ class StatisticController extends Controller
         $to = !is_null($request->search_time_start) ? (new Carbon($request->search_time_end))->toDateString() . ' 23:59:59' : Carbon::now()->toDateString() . ' 23:59:59';
         $search = $request->all();
         $request->flash();
+
+        $time_now = Carbon::now()->toDateTimeString();
 
         if(!empty($search)){
 
@@ -104,8 +107,9 @@ class StatisticController extends Controller
         }else{
             $log_logins = LogLogIn::with(['user', 'parking'])->get();
         }
+
         
-        return view('statistics.statistic-login', ['log_logins' => $log_logins]);
+        return view('statistics.statistic-login', ['log_logins' => $log_logins, 'time_now' => $time_now]);
     }
 
 
@@ -157,8 +161,6 @@ class StatisticController extends Controller
             $i++;
         }
 
-       
-
         return view('statistics.statistic-revenue', ['data' => $data, 'companies' => $companies]);
     }
 
@@ -195,10 +197,12 @@ class StatisticController extends Controller
                 });
             }   
 
-            $vehicles = $vehicles->with(['vehicle_type', 'parking'])->get();
+            $vehicles = $vehicles->with(['vehicle_type', 'parking'])->orderBy('Time_Out', 'desc')->get();
         }else{
-            $vehicles = StatisticParking::with(['vehicle_type', 'parking'])->get();
+            $vehicles = StatisticParking::with(['vehicle_type', 'parking'])->orderBy('Time_Out', 'desc')->get();
         }
+
+     
 
         return view('statistics.search-vehicle', ['vehicles' => $vehicles, 'companies' => $companies, 'vehicle_types' => $vehicle_types]);
     }
@@ -206,7 +210,9 @@ class StatisticController extends Controller
     public function detailVehicle($id){
         $vehicle = StatisticParking::with(['vehicle_type', 'parking'])->where('Parking_ID', $id)->first();
 
-        return view('statistics.detail-vehicle', ['vehicle' => $vehicle]);
+        $images = explode(",", preg_replace('([\s]+)', '', $vehicle->Url_Picture));
+
+        return view('statistics.detail-vehicle', ['vehicle' => $vehicle, 'images' => $images]);
     }
 
 }

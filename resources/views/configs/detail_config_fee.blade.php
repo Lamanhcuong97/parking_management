@@ -24,12 +24,12 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Thông tin chi tiết</h4>
-                        <form class="form-valide" action="{{ route('config.setConfigFee') }}" method="post">
+                        <form class="form-valide" action="{{ route('config.updateConfigFee') }}" method="post">
                             @csrf
                             <div class="form-group row">
-                                <label class="col-lg-4 col-form-label" for="val-parking-dan">Chọn bãi gửi <span class="text-danger">*</span></label>
+                                <label class="col-lg-4 col-form-label" for="val-parking-dan">Bãi gửi <span class="text-danger">*</span></label>
                                 <div class="col-lg-6">
-                                    <select class="form-control" id="val-parking-dan" name="parking_id" >
+                                    <select class="form-control" id="val-parking-dan" name="parking_id" disabled>
                                         <option value="0">Chọn bãi gửi</option> 
                                         @if(count($parkings) != 0)
                                             @foreach($parkings as $parking)
@@ -42,12 +42,13 @@
                                             @endforeach
                                         @endif
                                     </select>
+                                    <input type="hidden" name="parking_id" value="{{  $parking->Parking_Area_ID }}"/>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-lg-4 col-form-label" for="val-type-vehicle-dan">Chọn loại xe <span class="text-danger">*</span></label>
+                                <label class="col-lg-4 col-form-label" for="val-type-vehicle-dan">Loại xe <span class="text-danger">*</span></label>
                                 <div class="col-lg-6">
-                                    <select class="form-control" id="val-type-vehicle-dan" name="type_vehicle">
+                                    <select class="form-control" id="val-type-vehicle-dan" name="type_vehicle" disabled>
                                         <option value="0">Chọn loại xe</option>
                                         @if(count($vehicle_types) != 0)
                                             @foreach($vehicle_types as $vehicle_type)
@@ -60,16 +61,18 @@
                                             @endforeach
                                         @endif
                                     </select>
+                                    <input type="hidden" name="type_vehicle" value="{{  $detail_fees[0]['Vehicle_ID'] }}"/>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-lg-4 col-form-label" for="val-status">Chọn loại phí <span class="text-danger">*</span></label>
+                                <label class="col-lg-4 col-form-label" for="val-status">Loại phí <span class="text-danger">*</span></label>
                                 <div class="col-lg-6">
-                                    <select class="form-control" id="val-status-dan" name="type_fee">
+                                    <select class="form-control" id="val-status-dan" name="type_fee" disabled>
                                         <option value="" selected disabled>Chọn loại phí </option>
                                         <option value="0" {{ old('type_fee', $detail_fees[0]['Type_Of_Fee']) == 0 ? 'selected' : '' }}>Tính phí theo Block</option>
                                         <option value="1" {{ old('type_fee', $detail_fees[0]['Type_Of_Fee']) == 1 ? 'selected' : '' }}>Tính phí theo ca</option>
                                     </select>
+                                    <input type="hidden" name="type_vehicle" value="{{  $detail_fees[0]['Type_Of_Fee'] }}"/>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -111,16 +114,17 @@
                                             $no = 1;
                                         @endphp
                                         @foreach($detail_fees as $detail_fee)
+                                            <input type="hidden" class="form-control" id="fee_seqs" name="fee_ids[]" value='{{ $detail_fee['Parking_Fee_ID'] }}'/>
                                             <tr>
                                                 <td>{{ $no++ }}</td>
                                                 <td>
-                                                    <input type="number" class="form-control" id="fee_seqs" name="fee_seqs[]" value='{{ $detail_fee['Fee_SEQ'] }}'></input>
+                                                    <input type="number" class="form-control" id="fee_seqs" name="fee_seqs[]" value='{{ $detail_fee['Fee_SEQ'] }}'/>
                                                 </td>
                                                 <td>
                                                     <input type="number" class="form-control" id="time_blocks" name="time_blocks[]" value='{{ $detail_fee['Time_Block'] }}'></input>
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control" id="unit_prices" name="unit_prices[]" value='{{ $detail_fee['Unit_Price'] }}'></input>
+                                                    <input type="text" class="form-control" id="unit_prices" name="unit_prices[]" value='{{ number_format($detail_fee['Unit_Price'], 0) }}'></input>
                                                 </td>
                                                 <td>
                                                     <select class="form-control" id="val-status-dan" name="status[]">
@@ -143,7 +147,7 @@
                             
                             <div class="form-group row">
                                 <div class="col-lg-8 ml-auto">
-                                    <button type="submit" class="btn btn-primary">Cập nhật</button>
+                                    <button type="submit" class="btn btn-primary btn-update">Cập nhật</button>
                                 </div>
                             </div>
                         </form>
@@ -239,14 +243,14 @@
 
 
         
-      $('.btn-del').click(function (e) {
+      $('.btn-update').click(function (e) {
             e.preventDefault();
 
             var $form = $(this).closest('form');
             
             swal({
                 title: "Bạn có muốn?",
-                text: "Xóa dữ liệu không?",
+                text: "Cập nhật dữ liệu không?",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",

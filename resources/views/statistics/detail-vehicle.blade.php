@@ -89,10 +89,10 @@
                                                 <h4 class="card-title">Ảnh xe vào</h4>
                                                 <div class="row">
                                                     <div class="col-md-6 col-xs-6 b-r">
-                                                        <img style="width: 100%" src="../images/anh1.jpg">
+                                                        <img style="width: 100%" src="{{ asset('/storage/vehicles/'. $images[0]) }}">
                                                     </div>
                                                     <div class="col-md-6 col-xs-6 b-r">
-                                                        <img style="width: 100%" src="../images/anh2.jpg">
+                                                        <img style="width: 100%" src="{{ asset('/storage/vehicles/'. $images[1]) }}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -104,7 +104,7 @@
                                                 <h4 class="card-title">Ảnh xe ra</h4>
                                                 <div class="row">
                                                     <div class="col-md-12 col-xs-12 b-r">
-                                                        <img style="width: 100%" src="../images/anh3.jpg">
+                                                        <img style="width: 100%" src="{{ asset('/storage/vehicles/'. $images[2]) }}">
                                                     </div>
                                                 </div>
                                             </div>

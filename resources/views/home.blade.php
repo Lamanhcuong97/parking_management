@@ -25,7 +25,7 @@
                     <div class="media">
                         <div class="media-top">
                             <div><span><i class="fa fa-usd f-s-40 color-primary"></i></span></div>
-                            <div class="media-top-right"> <h2>{{ is_null($revenue) ? number_format(568120, 0) :  number_format($revenue, 2) }}</h2></div>
+                            <div class="media-top-right"> <h2>{{ is_null($revenue) ? number_format(568120, 0) :  number_format($revenue, 0) }}</h2></div>
                         </div>
                         <div class="media-bottom">
                             <p class="m-b-0">Tổng doanh thu tháng {{ $now }}</p>
