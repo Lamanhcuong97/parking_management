@@ -34,30 +34,6 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-lg-4 col-form-label" for="val-config-ticket">Cấu hình vé gửi <span class="text-danger">*</span></label>
-                                    <div class="col-lg-6">
-                                        <input type="password" class="form-control" id="val-config-ticket" name="config_ticket" value="{{ old('config_ticket') }}" placeholder="Nhập nội dung cấu hình vé">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-4 col-form-label" for="val-config-bill">Cấu hình hóa đơn <span class="text-danger">*</span></label>
-                                    <div class="col-lg-6">
-                                        <input type="password" class="form-control" id="val-config-bill" name="config_bill" value="{{ old('config_bill') }}" placeholder="Nhập nội dung cấu hình hóa đơn">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-4 col-form-label" for="val-latitude">Kinh độ<span class="text-danger">*</span></label>
-                                    <div class="col-lg-6">
-                                        <textarea class="form-control" id="val-latitude" name="latitude" value="{{ old('latitude') }}" rows="5" placeholder="Kinh độ"></textarea>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-lg-4 col-form-label" for="val-longitude">Vĩ độ <span class="text-danger">*</span></label>
-                                    <div class="col-lg-6">
-                                        <input type="text" class="form-control" id="val-longitude" name="longitude" value="{{ old('longitude') }}" placeholder="Vĩ độ">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
                                     <label class="col-lg-4 col-form-label" for="val-status">Trạng thái <span class="text-danger">*</span></label>
                                     <div class="col-lg-6">
                                         <select class="form-control" id="val-status" name="status">

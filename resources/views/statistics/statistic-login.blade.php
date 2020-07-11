@@ -45,7 +45,8 @@
                                     <div class="form-group">
                                         <label class="control-label">Tên người dùng</label>
                                         <input type="text" class="form-control"
-                                                id="statistic-login-name" name="statistic-login-name"
+                                                id="statistic-login-name" name="search_user_name"
+                                                value="{{ old('search_user_name')}}"
                                                 placeholder="Tên người dùng">
                                     </div>
                                 </div>
@@ -53,14 +54,14 @@
                                     <div class="form-group">
                                         <label class="control-label">Tên bãi gửi</label>
                                         <input type="text" class="form-control"
-                                                id="statistic-login-parking" name="statistic-login-parking"
-                                                placeholder="Nhập tên bãi">
+                                                id="statistic-login-parking" 
+                                                value="{{ old('search_parking_name')}}"
+                                                name="search_parking_name"
+                                                placeholder="Nhập tên bãi" >
                                     </div>
                                 </div>
                                 @if(!is_null($user) && $user->Role_ID != 'RLM0000001')
-                                <div class="col-md-3">
-                                    
-                                </div>
+                               
                                 @endif
                                 <div class="col-md-3">
                                     <div class="form-group">
@@ -74,18 +75,6 @@
 
 
                             <div class="row">
-                                <div class="col-md-3">
-                                        <div class="form-group">
-                                            <label class="control-label">Trạng thái</label>
-                                            <select class="form-control"
-                                                    id="search-vehicle-status"
-                                                    name="search-vehicle-status">
-                                                <option value="">Chọn trạng thái</option>
-                                                <option value="1">Trong bãi</option>
-                                                <option value="2">Rời bãi</option>
-                                            </select>
-                                        </div>
-                                    </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label class="control-label">Thời gian bắt đầu đầu</label>

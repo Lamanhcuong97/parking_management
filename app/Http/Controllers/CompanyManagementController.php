@@ -30,19 +30,19 @@ class CompanyManagementController extends Controller
             $companies = Company::select("*");
 
             if( !is_null($request->company_name)){
-                $companies = $companies->Where('Com_Name', $request->company_name);
+                $companies = $companies->Where('Com_Name', 'LIKE', '%' . $request->company_name . '%' );
             }
 
             if( !is_null($request->company_addr)){
-                $companies = $companies->Where('Com_Addr', $request->company_addr);
+                $companies = $companies->Where('Com_Addr', 'LIKE', '%' . $request->company_addr . '%' );
             }
 
             if( !is_null($request->company_phone)){
-                $companies = $companies->Where('Com_Phone', $request->company_phone);
+                $companies = $companies->Where('Com_Phone', 'LIKE', '%' . $request->company_phone . '%' );
             }
 
             if( !is_null($request->company_email)){
-                $companies = $companies->Where('Com_Email', $request->company_email);
+                $companies = $companies->Where('Com_Email', 'LIKE', '%' . $request->company_email . '%' );
             }
 
             $companies =  $companies->get();

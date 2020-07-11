@@ -115,11 +115,6 @@
                                                                     <th>Id</th>
                                                                     <th class="w-76">Bãi gửi</th>
                                                                     <th class="w-74">Loại phương tiện</th>
-                                                                    <th class="w-81">Loại phí</th>
-                                                                    <th class="w-73">Block</th>
-                                                                    <th class="w-76">Phí gửi</th>
-                                                                    <th class="w-73">Thời gian miễn phí</th>
-                                                                    <th class="w-81">Quá giờ</th>
                                                                     <th class="w-98">Hành động</th>
                                                                 </tr>
                                                             </thead>
@@ -133,13 +128,6 @@
                                                                         <td>{{ $no++ }}</td>
                                                                         <td>{{ $parking_fee->parking->Parking_Area_Name ?? '' }}</td>
                                                                         <td>{{ $parking_fee->vehicle_type->Type_Vehicle_Name ?? '' }}</td>
-                                                                        <td>{{ $parking_fee->Type_Of_Fee == 1 ? 'Theo giờ' : 'Theo ca' }}</td>
-                                                                        <td>{{ $parking_fee->Time_Block ?? '' }}</td>
-                                                                        <td>{{ $parking_fee->Unit_Price ?? '' }}</td>
-                                                                        <td>{{ $parking_fee->Free_First_Time ?? ''}}</td>
-                                                                        <td>
-                                                                            {{ $parking_fee->Over_Time ?? '' }}
-                                                                        </td>
                                                                        <td class="table-action">
                                                                             <a  data-toggle="detail" title="Chi tiết!"   href="{{ route('config.detailConfigFee', ['parking_id' => $parking_fee->parking->Parking_Area_ID, 
                                                                             'vehicle_type' => $parking_fee->vehicle_type->Type_Vehicle_ID, 'fee_type' => $parking_fee->Type_Of_Fee]) }}" class="btn btn-warning">

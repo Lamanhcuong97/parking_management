@@ -63,6 +63,8 @@ class StatisticController extends Controller
             $data[$i]->statistics = $statistics;
             $i++;
         }
+
+        
        
 
         return view('statistics.statistic-vehicle', ['data' => $data, 'companies' => $companies]);
@@ -79,11 +81,7 @@ class StatisticController extends Controller
 
         if(!empty($search)){
 
-            $log_logins = LogLogIn::select("*")->whereBetween('Time_In', [$from, $to]);
-
-            if( !is_null($request->status)){
-                $log_logins = $log_logins->Where('Parking_Status', $request->status);
-            }
+            $log_logins = LogLogIn::select("*")->whereBetween('Time_Log_In', [$from, $to]);
 
             if( !is_null($request->search_company_id)){
                 $company_id = $request->search_company_id;
@@ -99,8 +97,11 @@ class StatisticController extends Controller
                 });
             }
 
-            if( !is_null($request->company_email)){
-                $log_logins = $log_logins->Where('Com_Email', $request->company_email);
+            if( !is_null($request->search_user_name)){
+                $search_user_name = $request->search_user_name;
+                $log_logins = $log_logins->orWhereHas('user', function ($query) use ($search_user_name) {
+                    $query->where('User_Name', 'LIKE', $search_user_name);
+                });
             }
 
             $log_logins = $log_logins->with(['user', 'parking'])->get();
@@ -197,9 +198,9 @@ class StatisticController extends Controller
                 });
             }   
 
-            $vehicles = $vehicles->with(['vehicle_type', 'parking'])->orderBy('Time_Out', 'desc')->get();
+            $vehicles = $vehicles->with(['vehicle_type', 'parking'])->orderBy('Time_In', 'desc')->get();
         }else{
-            $vehicles = StatisticParking::with(['vehicle_type', 'parking'])->orderBy('Time_Out', 'desc')->get();
+            $vehicles = StatisticParking::with(['vehicle_type', 'parking'])->orderBy('Time_In', 'desc')->get();
         }
 
      

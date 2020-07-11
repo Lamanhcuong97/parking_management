@@ -27,10 +27,10 @@ class ParkingManagementController extends Controller
         $request->flash();
 
         if(!empty($search)){
-            $parkings = Parkings::select("*");
+            $parkings = Parking::select("*");
 
             if( !is_null($request->parking_name)){
-                $parkings = $parkings->Where('Parking_Area_Name', $request->parking_name);
+                $parkings = $parkings->Where('Parking_Area_Name', 'LIKE', '%' . $request->parking_name . '%');
             }
 
             if( !is_null($request->company_id)){
@@ -125,7 +125,7 @@ class ParkingManagementController extends Controller
         $parking->update(["Mod_Date" =>  $date]);
         $parking->update(["Mod_UID" =>  $user->User_ID]);
 
-        toastr()->success('Dữ liệu được lưu thành công!');
+        toastr()->success('Dữ liệu được cập nhật thành công!');
 
         return redirect()->route('parking-management.index');
     }

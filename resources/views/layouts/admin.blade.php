@@ -51,7 +51,7 @@
         <nav class="navbar top-navbar navbar-expand-md navbar-light">
             <!-- Logo -->
             <div class="navbar-header">
-                <a class="navbar-brand" href="../index.html">
+                <a class="navbar-brand" href="{{ route('home')}}">
                     <!-- Logo icon -->
                     <img src={{ asset("/images/logo.png") }} alt="homepage" class="dark-logo" />
                     <!--End Logo icon -->

@@ -46,11 +46,9 @@ class ConfigManagementController extends Controller
             $parking_fees =  $parking_fees->with(['parking', 'vehicle_type'])->get();
            
         }else{
-            $parking_fees = ParkingFee::with(['parking', 'vehicle_type'])->get();
+            $parking_fees = ParkingFee::with(['parking', 'vehicle_type'])->groupBy(['Parking_Area_ID', 'Vehicle_ID'])->get();
         }
 
-        
-        
         return view('configs.config-fee', ['parking_fees' => $parking_fees, 'vehicle_types' => $vehicle_types , 'parkings' => $parkings]);
     }
 

@@ -38,11 +38,11 @@ class UserManagementController extends Controller
             });
 
             if( !is_null($request->user_name)){
-                $users = $users->Where('User_Name', $request->user_name);
+                $users = $users->Where('User_Name', 'LIKE', '%' . $request->user_name . '%');
             }
 
             if( !is_null($request->full_name)){
-                $users = $users->Where('Full_Name', $request->full_name);
+                $users = $users->Where('Full_Name', 'LIKE', '%' . $request->full_name . '%');
             }
 
             if( !is_null($request->company_id)){

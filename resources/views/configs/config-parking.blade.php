@@ -148,10 +148,10 @@
                                                                             <td>{{ $no++ }}</td>
                                                                             <td>{{ $config_parking->parking->Parking_Area_Name ?? ''}}</td>
                                                                             <td>{{ $config_parking->user->User_Name ?? ''}}</td>
-                                                                            <td>{{ $config_parking->user->role->Role_Name}}</td>
+                                                                            <td>{{ $config_parking->user->role->Role_Name ?? ''}}</td>
                                                                             <td>
-                                                                                <span class="badge badge-success">
-                                                                                    Hoạt động
+                                                                                <span class="badge  {{ $config_parking->Delete_Flag == 0 ? 'badge-success' : 'badge-danger'}} ">
+                                                                                {{ $config_parking->Delete_Flag == 0 ? 'Hoạt động' : 'Ngừng hoạt động'}}
                                                                                 </span>
                                                                             </td>
                                                                             <td class="table-action">

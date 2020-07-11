@@ -37,7 +37,7 @@
                                         <div class="col-md-4" style="text-align: center;">
                                             <header>
                                                 <div class="avatar">
-                                                    <img style="width: 200px;" src="../images/users/avatar_profile.png" alt="Allison Walker" />
+                                                    <img style="width: 200px;" src="{{ asset("/images/users/avatar_profile.png") }}" alt="La Manh Cuong" />
                                                 </div>
                                             </header>
 
@@ -76,47 +76,19 @@
                                             <div class="form-group">
                                                 <label class="col-md-12">Tên đăng nhập</label>
                                                 <div class="col-md-12">
-<<<<<<< HEAD
                                                     <input type="text" disabled value="{{ $user->User_Name ?? '' }}" name="user_name" class="form-control form-control-line">
-=======
-                                                    <input type="text" placeholder="htech" class="form-control form-control-line">
->>>>>>> b578ee3941d54e5739135a11c2b4e92e63064e9f
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label for="example-email" class="col-md-12">Họ và tên</label>
                                                 <div class="col-md-12">
-<<<<<<< HEAD
                                                     <input type="text" class="form-control form-control-line" value="{{ $user->Full_Name ?? '' }}" name="full_name" id="full_name">
-=======
-                                                    <input type="text" placeholder="Công ty cổ phần Hitech Việt Nam" class="form-control form-control-line" name="example-email" id="example-email">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="col-md-12">Mật khẩu</label>
-                                                <div class="col-md-12">
-                                                    <input type="password" value="password" class="form-control form-control-line">
->>>>>>> b578ee3941d54e5739135a11c2b4e92e63064e9f
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="col-md-12">Số điện thoại</label>
                                                 <div class="col-md-12">
-<<<<<<< HEAD
                                                     <input type="text" placeholder="123 456 7890"  value="{{ $user->Phone ?? '' }}" class="form-control form-control-line">
-=======
-                                                    <input type="text" placeholder="123 456 7890" class="form-control form-control-line">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="col-sm-12">Trạng thái hoạt động</label>
-                                                <div class="col-sm-12">
-                                                    <select class="form-control">
-                                                        <option value="0">Chọn trạng thái</option>
-                                                        <option value="1">Hoạt động</option>
-                                                        <option value="2">Ngừng hoạt động</option>
-                                                    </select>
->>>>>>> b578ee3941d54e5739135a11c2b4e92e63064e9f
                                                 </div>
                                             </div>
                                             <div class="form-group">

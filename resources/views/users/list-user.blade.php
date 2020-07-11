@@ -102,7 +102,7 @@
                                     @foreach($users as $row)
                                         <tr>
                                             <td>{{ $no++ }}</td>
-                                            <td>{{ $row->row_Name ?? '' }}</td>
+                                            <td>{{ $row->User_Name ?? '' }}</td>
                                             <td>{{ $row->Full_Name ?? '' }}</td>
                                             <td>{{ $row->Phone ?? '' }}</td>
                                             <td>{{ $row->role->Role_Name ?? '' }}</td>

@@ -104,7 +104,9 @@
                                                 <h4 class="card-title">Ảnh xe ra</h4>
                                                 <div class="row">
                                                     <div class="col-md-12 col-xs-12 b-r">
+                                                        @if(count($images) > 2)
                                                         <img style="width: 100%" src="{{ asset('/storage/vehicles/'. $images[2]) }}">
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>

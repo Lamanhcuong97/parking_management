@@ -130,8 +130,10 @@ class InfoParkingController extends Controller
             }
         }else{
 
+           
            $is_saved =  StatisticParking::where('Ticket_Code', $request->Ticket_Code)->update(
                 [
+                    'Time_In' => $request->Time_In,
                     'Time_Out' => $request->Time_Out,
                     'Url_Picture' => $request->Url_Picture,
                     'Parking_Status' => 1,
@@ -144,7 +146,7 @@ class InfoParkingController extends Controller
             if ($is_saved) {
                 return response()->json([
                     'success' => 1,
-                    'message' => 'Data was created successfully'
+                    'message' => 'Data was updated successfully'
                   ]);
             } else {
                 return response()->json([
